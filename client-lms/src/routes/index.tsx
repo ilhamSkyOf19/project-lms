@@ -1,0 +1,37 @@
+import { createBrowserRouter } from "react-router";
+import Home from "../Pages/Home";
+import SignIn from "../Pages/SignIn";
+import SignUp from "../Pages/SignUp";
+import Pricing from "../Pages/Pricing";
+import SuccessCheckout from "../Pages/SuccessCheckout";
+import Manager from "../Pages/Manager";
+
+const route = createBrowserRouter([
+    {
+        path: "/",
+        element: <Home />,
+    },
+    {
+        path: "/manager/sign-in",
+        element: <SignIn />,
+    },
+    {
+        path: "/manager/sign-up",
+        element: <SignUp />,
+    },
+    {
+        path: "/pricing",
+        element: <Pricing />,
+    },
+    {
+        path: "/success-checkout",
+        element: <SuccessCheckout />,
+    },
+    {
+        path: "/manager",
+        element: <Manager />,
+    },
+]);
+
+
+export default route;
