@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Yulia Putri",
+        "totalCourse": 182,
+        "statusCourse": true,
+        "img": "photo-2.png"
+    },
+    {
+        "name": "Angga Risky Setiawan",
+        "totalCourse": 95,
+        "statusCourse": true,
+        "img": "photo-3.png"
+    },
+    {
+        "name": "Dewi Lestari",
+        "totalCourse": 210,
+        "statusCourse": true,
+        "img": "photo-4.png"
+    },
+    {
+        "name": "Budi Santoso",
+        "totalCourse": 76,
+        "statusCourse": true,
+        "img": "photo-5.png"
+    },
+    {
+        "name": "Rizky Ananda",
+        "totalCourse": 134,
+        "statusCourse": true,
+        "img": "photo-4.png"
+    }
+]

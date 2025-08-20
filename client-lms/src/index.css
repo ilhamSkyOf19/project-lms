@@ -6,6 +6,8 @@
 @theme {
     --color-primary-black: #0F0E0E;
     --color-primary-purple: #bd00ff;
+    --color-primary-white: #F8FAFB;
+    --color-primary-purple-opacity: rgba(189, 0, 255, 0.5);
     --font-Poppins: 'Poppins', sans-serif;
 }
 

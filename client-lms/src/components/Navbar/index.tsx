@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import type { Menu } from '../../types'
 import { useLocation } from 'react-router'
 import clsx from 'clsx'
-import ButtonPurple from '../ButtonPurple'
+import ButtonPurple from '../ButtonLinkPurple'
 
 
 const Navbar: FC = () => {

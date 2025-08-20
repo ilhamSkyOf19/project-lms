@@ -1,6 +1,6 @@
 import { useEffect, useState, type FC } from 'react'
-import { formatCurrency } from '../../helper/formatCurrency';
 import ListFeaturesCardPricing from '../ListFeaturesCardPricing';
+import { formatCurrency } from '../../helper/formatCurrency';
 
 type Props = {
     type: 'regular' | 'premium';

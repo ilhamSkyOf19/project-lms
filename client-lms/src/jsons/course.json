@@ -1,0 +1,32 @@
+[
+    {
+        "name": "full stack developer",
+        "category": "programming",
+        "img": "th-1.png",
+        "students": 12500
+    },
+    {
+        "name": "digital marketing specialist",
+        "category": "marketing",
+        "img": "th-2.png",
+        "students": 8900
+    },
+    {
+        "name": "ui/ux designer",
+        "category": "design",
+        "img": "th-3.png",
+        "students": 7400
+    },
+    {
+        "name": "data scientist",
+        "category": "data science",
+        "img": "th-1.png",
+        "students": 15800
+    },
+    {
+        "name": "graphic designer",
+        "category": "design",
+        "img": "th-2.png",
+        "students": 10200
+    }
+]

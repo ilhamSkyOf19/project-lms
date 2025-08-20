@@ -1,6 +1,6 @@
 import { type FC } from 'react'
 import LayoutGlobal from '../../Layouts/LayoutGlobal'
-import ButtonPurple from '../../components/ButtonPurple'
+import ButtonPurple from '../../components/ButtonLinkPurple'
 
 const SuccessCheckout: FC = () => {
     return (
