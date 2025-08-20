@@ -5,6 +5,8 @@ import SignUp from "../Pages/SignUp";
 import Pricing from "../Pages/Pricing";
 import SuccessCheckout from "../Pages/SuccessCheckout";
 import Manager from "../Pages/Manager";
+import ManagerCourse from "../Pages/ManagerCourse";
+import LayoutDashboard from "../Layouts/LayoutDashboard";
 
 const route = createBrowserRouter([
     {
@@ -29,7 +31,17 @@ const route = createBrowserRouter([
     },
     {
         path: "/manager",
-        element: <Manager />,
+        element: <LayoutDashboard />,
+        children: [
+            {
+                index: true,
+                element: <Manager />,
+            },
+            {
+                path: "/manager/course",
+                element: <ManagerCourse />,
+            },
+        ]
     },
 ]);
 

@@ -37,8 +37,24 @@
 /* global font */
 body {
     font-family: 'Poppins', sans-serif;
+    font-family: "Poppins";
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 button {
     cursor: pointer;
+}
+
+
+/* hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

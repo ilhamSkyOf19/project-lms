@@ -1,11 +1,11 @@
 import { type FC } from 'react'
 
-const Manager: FC = () => {
+const ManagerCourse: FC = () => {
     return (
         <div className='w-full min-h-[200vh]'>
-            manager
+            Manager course
         </div>
     )
 }
 
-export default Manager
+export default ManagerCourse
