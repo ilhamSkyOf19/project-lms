@@ -32,8 +32,19 @@ export type DataStudent = {
 
 // types data course 
 export type DataCourse = {
+    id: string;
     name: string;
     img: 'th-1.png' | 'th-2.png' | 'th-3.png' | 'th-4.png' | 'th-5.png';
     category: 'programming' | 'design' | 'data science' | 'marketing';
     students: number;
+    contents: number;
+    preview: string;
+    certificate: boolean;
+    contentList: DataContent[]
+}
+
+export type DataContent = {
+    id: string;
+    name: string;
+    category: 'video' | 'text'
 }

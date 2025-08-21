@@ -6,7 +6,7 @@ import IconDescComponent from '../IconDescComponent';
 type Props = {
     data: DataCourse;
 }
-const CardManageCourse: FC<Props> = ({ data: { name, img, category, students } }) => {
+const CardManageCourse: FC<Props> = ({ data: { name, img, category, students, id } }) => {
     return (
         <div className='w-full flex flex-row justify-between items-center'>
             {/* course */}
@@ -29,7 +29,7 @@ const CardManageCourse: FC<Props> = ({ data: { name, img, category, students } }
                 </div>
             </div>
             {/* button */}
-            <ButtonLinkBorder link='#' label='manage' />
+            <ButtonLinkBorder link={`/manager/course/manage-course-materi/${id}`} label='manage' />
         </div>
     )
 }

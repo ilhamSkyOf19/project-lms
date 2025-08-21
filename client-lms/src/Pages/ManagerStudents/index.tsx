@@ -55,7 +55,7 @@ const CardManageStudent: FC<PropsCardManageStudent> = ({ data }) => {
             {/* card */}
             <CardLatestStudent data={data as DataStudent} />
             {/* button */}
-            <div className='w-full flex flex-row justify-end items-center gap-4'>
+            <div className='w-full flex flex-row justify-end items-center gap-3'>
                 {/* edit profile */}
                 <ButtonLinkBorder link='#' label='edit profile' />
                 {/* button delete */}

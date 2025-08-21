@@ -10,6 +10,7 @@ import LayoutDashboard from "../Layouts/LayoutDashboard";
 import ManagerStudents from "../Pages/ManagerStudents";
 import NotFound from "../Pages/NotFound";
 import NewCourse from "../Pages/NewCourse";
+import ManageCourseMateri from "../Pages/ManageCourseMateri";
 
 const route = createBrowserRouter([
     {
@@ -52,6 +53,10 @@ const route = createBrowserRouter([
             {
                 path: "/manager/course/new-course",
                 element: <NewCourse />,
+            },
+            {
+                path: "/manager/course/manage-course-materi/:id",
+                element: <ManageCourseMateri />,
             },
             {
                 path: "/manager/students",

@@ -10,9 +10,11 @@ const HeaderContentDashboard: FC<Props> = ({ header, desc, children }) => {
     return (
         <div className='w-full flex flex-row justify-between items-center'>
             {/* text */}
-            <TitleContentDahsboard header={header} desc={desc} />
+            <div className='flex-2 flex flex-col justify-start items-start'>
+                <TitleContentDahsboard header={header} desc={desc} />
+            </div>
             {/* button */}
-            <div className='w-full flex flex-row justify-end items-center gap-4'>
+            <div className='flex-1 flex flex-row justify-end items-center gap-4'>
                 {children}
             </div>
         </div>

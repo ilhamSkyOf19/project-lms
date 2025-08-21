@@ -1,32 +1,157 @@
 [
     {
-        "name": "full stack developer",
+        "id": "1",
+        "name": "Full Stack Web Development with React, Node.js, and MongoDB",
         "category": "programming",
         "img": "th-1.png",
-        "students": 12500
+        "students": 12500,
+        "contents": 145,
+        "preview": "th-4.png",
+        "certificate": true,
+        "contentList": [
+            {
+                "id": "c1-1",
+                "name": "Introduction to Full Stack Development",
+                "category": "video"
+            },
+            {
+                "id": "c1-2",
+                "name": "Understanding the MERN Stack Architecture",
+                "category": "text"
+            },
+            {
+                "id": "c1-3",
+                "name": "Building REST APIs with Express.js",
+                "category": "video"
+            },
+            {
+                "id": "c1-4",
+                "name": "MongoDB Database Design Basics",
+                "category": "text"
+            }
+        ]
     },
     {
-        "name": "digital marketing specialist",
+        "id": "2",
+        "name": "Advanced Digital Marketing and Social Media Strategy Masterclass",
         "category": "marketing",
         "img": "th-2.png",
-        "students": 8900
+        "students": 8900,
+        "contents": 96,
+        "preview": "th-4.png",
+        "certificate": true,
+        "contentList": [
+            {
+                "id": "c2-1",
+                "name": "SEO Fundamentals and Keyword Research",
+                "category": "video"
+            },
+            {
+                "id": "c2-2",
+                "name": "Running Facebook Ads for Business",
+                "category": "video"
+            },
+            {
+                "id": "c2-3",
+                "name": "Email Marketing Best Practices",
+                "category": "text"
+            }
+        ]
     },
     {
-        "name": "ui/ux designer",
+        "id": "3",
+        "name": "Professional UI/UX Design for Mobile and Web Applications",
         "category": "design",
         "img": "th-3.png",
-        "students": 7400
+        "students": 7400,
+        "contents": 120,
+        "preview": "th-4.png",
+        "certificate": true,
+        "contentList": [
+            {
+                "id": "c3-1",
+                "name": "Principles of Good UI Design",
+                "category": "text"
+            },
+            {
+                "id": "c3-2",
+                "name": "Wireframing with Figma",
+                "category": "video"
+            },
+            {
+                "id": "c3-3",
+                "name": "Prototyping User Flows",
+                "category": "video"
+            },
+            {
+                "id": "c3-4",
+                "name": "Accessibility in UX",
+                "category": "text"
+            }
+        ]
     },
     {
-        "name": "data scientist",
+        "id": "4",
+        "name": "Data Science and Machine Learning with Python and TensorFlow",
         "category": "data science",
         "img": "th-1.png",
-        "students": 15800
+        "students": 15800,
+        "contents": 185,
+        "preview": "th-4.png",
+        "certificate": true,
+        "contentList": [
+            {
+                "id": "c4-1",
+                "name": "Python Basics for Data Analysis",
+                "category": "video"
+            },
+            {
+                "id": "c4-2",
+                "name": "Data Cleaning and Preprocessing",
+                "category": "text"
+            },
+            {
+                "id": "c4-3",
+                "name": "Introduction to Machine Learning Models",
+                "category": "video"
+            },
+            {
+                "id": "c4-4",
+                "name": "Deep Learning with TensorFlow",
+                "category": "video"
+            }
+        ]
     },
     {
-        "name": "graphic designer",
+        "id": "5",
+        "name": "Creative Graphic Design and Branding with Adobe Illustrator & Photoshop",
         "category": "design",
         "img": "th-2.png",
-        "students": 10200
+        "students": 10200,
+        "contents": 110,
+        "preview": "th-4.png",
+        "certificate": true,
+        "contentList": [
+            {
+                "id": "c5-1",
+                "name": "Introduction to Graphic Design Principles",
+                "category": "text"
+            },
+            {
+                "id": "c5-2",
+                "name": "Logo Design with Adobe Illustrator",
+                "category": "video"
+            },
+            {
+                "id": "c5-3",
+                "name": "Photo Editing Basics in Photoshop",
+                "category": "video"
+            },
+            {
+                "id": "c5-4",
+                "name": "Creating Brand Guidelines",
+                "category": "text"
+            }
+        ]
     }
 ]
