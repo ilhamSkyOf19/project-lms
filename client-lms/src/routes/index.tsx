@@ -8,8 +8,13 @@ import Manager from "../Pages/Manager";
 import ManagerCourse from "../Pages/ManagerCourse";
 import LayoutDashboard from "../Layouts/LayoutDashboard";
 import ManagerStudents from "../Pages/ManagerStudents";
+import NotFound from "../Pages/NotFound";
 
 const route = createBrowserRouter([
+    {
+        path: "*",
+        element: <NotFound />,
+    },
     {
         path: "/",
         element: <Home />,
