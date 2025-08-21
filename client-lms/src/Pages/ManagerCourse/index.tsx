@@ -24,7 +24,7 @@ const ManagerCourse: FC = () => {
                 {/* import file */}
                 <ButtonBorder label='import file' />
                 {/* new course */}
-                <ButtonLinkPurple link='#' label='new course' />
+                <ButtonLinkPurple link='/manager/course/new-course' label='new course' />
             </HeaderContentDashboard>
 
             {/* content course */}

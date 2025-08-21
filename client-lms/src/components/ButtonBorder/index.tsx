@@ -1,12 +1,18 @@
+import clsx from 'clsx';
 import { type FC } from 'react'
 
 type Props = {
     label: string;
+    width?: string
+    type?: 'button' | 'submit';
 }
 
-const ButtonBorder: FC<Props> = ({ label }) => {
+const ButtonBorder: FC<Props> = ({ width, label, type }) => {
     return (
-        <button type='button' className='px-6 py-3.5 rounded-full text-black border font-semibold capitalize flex flex-row justify-center items-center text-sm hover:scale-105 transition-all duration-300'>
+        <button type={type ? type : 'button'} className={clsx(
+            ' py-3.5 rounded-full text-black border font-semibold capitalize flex flex-row justify-center items-center text-sm hover:scale-105 transition-all duration-300',
+            width ? `w-${width}` : 'px-6'
+        )}>
             {
                 label
             }

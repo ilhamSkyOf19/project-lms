@@ -12,7 +12,7 @@ const LayoutDashboard: FC = () => {
                 <SideBar />
             </div>
             {/* children */}
-            <div className='w-full h-[100vh] px-7 overflow-y-scroll py-9'>
+            <div className='w-full h-[100vh] px-7 overflow-y-scroll py-8'>
                 {/* header */}
                 <HeaderDashboard />
                 {/* content */}
