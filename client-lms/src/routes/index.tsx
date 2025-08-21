@@ -7,6 +7,7 @@ import SuccessCheckout from "../Pages/SuccessCheckout";
 import Manager from "../Pages/Manager";
 import ManagerCourse from "../Pages/ManagerCourse";
 import LayoutDashboard from "../Layouts/LayoutDashboard";
+import ManagerStudents from "../Pages/ManagerStudents";
 
 const route = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const route = createBrowserRouter([
                 path: "/manager/course",
                 element: <ManagerCourse />,
             },
+            {
+                path: "/manager/students",
+                element: <ManagerStudents />,
+            }
         ]
     },
 ]);

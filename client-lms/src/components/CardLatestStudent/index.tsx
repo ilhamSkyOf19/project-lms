@@ -19,7 +19,7 @@ const CardLatestStudent: FC<Props> = ({ data: { name, totalCourse, statusCourse,
                 {/* icon, total course, status course */}
                 <div className='flex flex-row justify-start items-start gap-2'>
                     {/* icons */}
-                    <img src='/assets/images/icons/crown-purple.svg' alt='crown' className='w-5 h-5' loading='lazy' />
+                    <img src='/assets/images/icons/note-favorite-purple.svg' alt='crown' className='w-5 h-5' loading='lazy' />
                     {/* total course */}
                     <p className='text-slate-500 text-md capitalize'>{totalCourse}<span className='ml-1'>{statusCourse ? 'Course Joined' : 'Course Not Joined'}</span></p>
                 </div>

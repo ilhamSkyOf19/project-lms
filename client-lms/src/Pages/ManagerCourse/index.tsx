@@ -5,7 +5,7 @@ import ButtonLinkPurple from '../../components/ButtonLinkPurple'
 import course from '../../jsons/course.json'
 import CardManageCourse from '../../components/CardManageCourse'
 import type { DataCourse } from '../../types'
-import ButtonPagination from '../../components/ButtonPagination'
+import PaginationNumber from '../../components/PaginationNumber'
 
 const ManagerCourse: FC = () => {
     // state pagination active
@@ -28,7 +28,7 @@ const ManagerCourse: FC = () => {
             </HeaderContentDashboard>
 
             {/* content course */}
-            <div className='bg-[#F8FAFB] w-full flex flex-col justify-start items-center p-6 py-12 rounded-3xl overflow-x-hidden gap-12'>
+            <div className='bg-[#F8FAFB] w-full flex flex-col justify-start items-center p-8 rounded-3xl overflow-x-hidden gap-12'>
                 {
                     course.map((course, index) => (
                         <CardManageCourse key={index} data={course as DataCourse} />
@@ -36,7 +36,7 @@ const ManagerCourse: FC = () => {
                 }
 
                 {/* pagination */}
-                <Pagination paginationActive={paginationActive} handlePagination={handlePagination} />
+                <PaginationNumber paginationActive={paginationActive} handlePagination={handlePagination} pagination={5} />
             </div>
 
         </div>
@@ -44,23 +44,6 @@ const ManagerCourse: FC = () => {
 }
 
 
-type PropsPagination = {
-    paginationActive: number;
-    handlePagination: (number: number) => void
-}
-// pagination
-const Pagination: FC<PropsPagination> = ({ paginationActive, handlePagination }) => {
 
-
-    return (
-        <div className='w-full flex flex-row justify-start items-start gap-2.5'>
-            {
-                [1, 2, 3, 4, 5].map((item, index) => (
-                    <ButtonPagination key={index} number={item} handleButton={() => handlePagination(item)} active={paginationActive === item} />
-                ))
-            }
-        </div>
-    )
-}
 
 export default ManagerCourse
