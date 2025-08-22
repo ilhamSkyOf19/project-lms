@@ -8,6 +8,9 @@ import BoxInputChoose from '../../../../components/BoxInputChoose'
 import ButtonBorder from '../../../../components/ButtonBorder'
 import ButtonPurple from '../../../../components/ButtonPurple'
 
+import { Editor } from '@tinymce/tinymce-react';
+
+
 const AddContentCourse: FC = () => {
     const [thumb, setThumb] = useState<string>('');
     const [contentType, setContentType] = useState<string>('');
@@ -20,13 +23,15 @@ const AddContentCourse: FC = () => {
     // handle data course thumb
     useEffect(() => {
         if (id) {
-            const getData: DataCourse | undefined = (course as DataCourse[]).find((id) => id === id);
+            const getData: DataCourse | undefined = (course as DataCourse[]).find((item) => item.id === id);
 
             if (getData) {
                 setThumb(getData.img);
             }
         }
-    }, [])
+    }, [id])
+
+    console.log(thumb)
 
 
     // handle content type 
@@ -74,8 +79,24 @@ const AddContentCourse: FC = () => {
 
                             <BoxInputData icon='bill-black.svg' label='Youtube Video ID' type='text' placeholder='Write tagline for better copy' name='youtubeVideoID' />
                         ) : contentType === 'text' ? (
+                            <div className='w-full flex flex-col justify-start items-start gap-4'>
+                                <label className='text-md text-black font-semibold capitalize'>
+                                    content text
+                                </label>
+                                <Editor
+                                    apiKey='6uh4pu477wnprxe2jbwlz8dhgg7h142a0o1hldypdxe041d9'
+                                    init={{
+                                        height: 400,
+                                        width: "100%",
+                                        menubar: false,
+                                        plugins: 'lists link image table code',
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | code',
+                                        placeholder: "Write your content text...",
+                                    }}
+                                    onEditorChange={(content) => console.log(content)}
+                                />
+                            </div>
 
-                            <BoxInputData icon='note-favorite-black.svg' label='Content Text' type='textarea' placeholder='Write better name for your course' name='contentText' />
                         ) : (
                             <div className='w-full' />
                         )

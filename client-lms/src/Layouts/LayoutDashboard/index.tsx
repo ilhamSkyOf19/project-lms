@@ -1,15 +1,31 @@
 import { type FC } from 'react'
 import SideBar from '../../components/SideBar';
-import { Outlet } from 'react-router';
+import { Outlet, useMatch } from 'react-router';
 import HeaderDashboard from '../../components/HeaderDashboard';
+import SideBarPreview from '../../components/SideBarPreview';
+import clsx from 'clsx';
 
 
 const LayoutDashboard: FC = () => {
+
+    // use match 
+    const preview = useMatch('/manager/course/manage-course-materi/:id/preview/:idContent');
+
+
     return (
         <div className='w-full min-h-[100vh] flex flex-row justify-start items-start overflow-x-hidden'>
             {/* sidebar */}
-            <div className='w-[25rem] h-[100vh] p-2.5'>
-                <SideBar />
+            <div className={clsx(
+                'h-[100vh] p-2.5',
+                preview ? 'w-[30rem]' : 'w-[25rem]'
+            )}>
+                {
+                    preview ? (
+                        <SideBarPreview />
+                    ) : (
+                        <SideBar />
+                    )
+                }
             </div>
             {/* children */}
             <div className='w-full h-[100vh] px-7 overflow-y-scroll py-8'>

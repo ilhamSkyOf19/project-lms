@@ -13,6 +13,7 @@ import ManageCourseMateri from "../Pages/managers/course/ManageCourseMateri";
 import AddContentCourse from "../Pages/managers/course/AddContentCourse";
 import ManagerStudents from "../Pages/managers/student/ManagerStudents";
 import AddStudent from "../Pages/managers/student/AddStudent";
+import Preview from "../Pages/Preview";
 
 const route = createBrowserRouter([
     {
@@ -63,6 +64,10 @@ const route = createBrowserRouter([
             {
                 path: "/manager/course/manage-course-materi/:id/add-content",
                 element: <AddContentCourse />,
+            },
+            {
+                path: "/manager/course/manage-course-materi/:id/preview/:idContent",
+                element: <Preview />,
             },
             {
                 path: "/manager/students",
