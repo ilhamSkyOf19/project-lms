@@ -1,17 +1,17 @@
 import { useEffect, useState, type FC } from 'react'
 import { useParams } from 'react-router'
-import HeaderContentDashboard from '../../components/HeaderContentDahsboard';
-import ButtonBorder from '../../components/ButtonBorder';
-import ButtonLinkPurple from '../../components/ButtonLinkPurple';
+import HeaderContentDashboard from '../../../../components/HeaderContentDahsboard';
+import ButtonBorder from '../../../../components/ButtonBorder';
+import ButtonLinkPurple from '../../../../components/ButtonLinkPurple';
 
-import course from '../../jsons/course.json'
-import { type DataCourse } from '../../types';
-import CardInfo from '../../components/CardInfo';
-import CardCourseContent from '../../components/CardCourseContent';
-import ButtonLinkBorder from '../../components/ButtonLinkBorder';
-import ButtonDelete from '../../components/ButtonnDelete';
-import PaginationNumber from '../../components/PaginationNumber';
-import LinkRoute from '../../components/LinkRoute';
+import course from '../../../../jsons/course.json'
+import { type DataCourse } from '../../../../types';
+import CardInfo from '../../../../components/CardInfo';
+import CardCourseContent from '../../../../components/CardCourseContent';
+import ButtonLinkBorder from '../../../../components/ButtonLinkBorder';
+import ButtonDelete from '../../../../components/ButtonnDelete';
+import PaginationNumber from '../../../../components/PaginationNumber';
+import LinkRoute from '../../../../components/LinkRoute';
 
 const ManageCourseMateri: FC = () => {
     // state pagunation active
@@ -42,6 +42,7 @@ const ManageCourseMateri: FC = () => {
     const handlePagination = (number: number) => {
         setPaginationActive(number);
     }
+
     return (
         <div className='w-full min-h-[100vh] flex flex-col justify-start items-start gap-8'>
             {/* link route */}

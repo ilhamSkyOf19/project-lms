@@ -4,14 +4,15 @@ import SignIn from "../Pages/SignIn";
 import SignUp from "../Pages/SignUp";
 import Pricing from "../Pages/Pricing";
 import SuccessCheckout from "../Pages/SuccessCheckout";
-import Manager from "../Pages/Manager";
-import ManagerCourse from "../Pages/ManagerCourse";
-import LayoutDashboard from "../Layouts/LayoutDashboard";
-import ManagerStudents from "../Pages/ManagerStudents";
 import NotFound from "../Pages/NotFound";
-import NewCourse from "../Pages/NewCourse";
-import ManageCourseMateri from "../Pages/ManageCourseMateri";
-import AddContentCourse from "../Pages/AddContentCourse";
+import LayoutDashboard from "../Layouts/LayoutDashboard";
+import ManagerOverview from "../Pages/managers/ManagerOverview";
+import ManagerCourse from "../Pages/managers/course/ManagerCourse";
+import NewCourse from "../Pages/managers/course/NewCourse";
+import ManageCourseMateri from "../Pages/managers/course/ManageCourseMateri";
+import AddContentCourse from "../Pages/managers/course/AddContentCourse";
+import ManagerStudents from "../Pages/managers/student/ManagerStudents";
+import AddStudent from "../Pages/managers/student/AddStudent";
 
 const route = createBrowserRouter([
     {
@@ -44,7 +45,7 @@ const route = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Manager />,
+                element: <ManagerOverview />,
             },
             {
                 path: "/manager/course",
@@ -66,6 +67,10 @@ const route = createBrowserRouter([
             {
                 path: "/manager/students",
                 element: <ManagerStudents />,
+            },
+            {
+                path: "/manager/students/add-student",
+                element: <AddStudent />,
             }
 
         ]

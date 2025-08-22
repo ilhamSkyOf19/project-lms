@@ -1,8 +1,8 @@
 import { type FC } from 'react'
-import CardData from '../../../components/CardData'
-import type { DataChart } from '../../../types'
+import CardData from '../../../../components/CardData'
+import type { DataChart } from '../../../../types'
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
-import { getPersentase } from '../../../helper/formatPersentase'
+import { getPersentase } from '../../../../helper/formatPersentase'
 
 type Props = {
     data: DataChart[]

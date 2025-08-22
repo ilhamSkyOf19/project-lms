@@ -1,13 +1,13 @@
 import { useState, type FC } from 'react'
-import HeaderContentDashboard from '../../components/HeaderContentDahsboard'
-import ButtonBorder from '../../components/ButtonBorder'
-import ButtonLinkPurple from '../../components/ButtonLinkPurple'
-import CardLatestStudent from '../../components/CardLatestStudent'
-import students from '../../jsons/students.json'
-import type { DataStudent } from '../../types'
-import ButtonLinkBorder from '../../components/ButtonLinkBorder'
-import ButtonDelete from '../../components/ButtonnDelete'
-import PaginationNumber from '../../components/PaginationNumber'
+import HeaderContentDashboard from '../../../../components/HeaderContentDahsboard'
+import ButtonBorder from '../../../../components/ButtonBorder'
+import ButtonLinkPurple from '../../../../components/ButtonLinkPurple'
+import CardLatestStudent from '../../../../components/CardLatestStudent'
+import students from '../../../../jsons/students.json'
+import type { DataStudent } from '../../../../types'
+import ButtonLinkBorder from '../../../../components/ButtonLinkBorder'
+import ButtonDelete from '../../../../components/ButtonnDelete'
+import PaginationNumber from '../../../../components/PaginationNumber'
 
 const ManagerStudents: FC = () => {
     // state pagination active
@@ -24,7 +24,7 @@ const ManagerStudents: FC = () => {
                 {/* import file */}
                 <ButtonBorder label='import file' />
                 {/* add students */}
-                <ButtonLinkPurple link='#' label='add students' />
+                <ButtonLinkPurple link='/manager/students/add-student' label='add students' />
             </HeaderContentDashboard>
 
             {/* content */}

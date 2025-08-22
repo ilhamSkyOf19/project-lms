@@ -20,7 +20,7 @@ const CardCourseContent: FC<Props> = ({ number, data: { name, category } }) => {
             </div>
 
             {/* desc */}
-            <div className='w-full h-full flex flex-col justify-center items-center gap-2'>
+            <div className='w-full h-full flex flex-col justify-center items-start gap-2'>
                 {/* name */}
                 <h2 className='font-bold text-xl'>
                     {name}

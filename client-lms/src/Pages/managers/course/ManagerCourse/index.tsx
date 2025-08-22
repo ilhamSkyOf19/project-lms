@@ -1,11 +1,11 @@
 import { useState, type FC } from 'react'
-import HeaderContentDashboard from '../../components/HeaderContentDahsboard'
-import ButtonBorder from '../../components/ButtonBorder'
-import ButtonLinkPurple from '../../components/ButtonLinkPurple'
-import course from '../../jsons/course.json'
-import CardManageCourse from '../../components/CardManageCourse'
-import type { DataCourse } from '../../types'
-import PaginationNumber from '../../components/PaginationNumber'
+import HeaderContentDashboard from '../../../../components/HeaderContentDahsboard'
+import ButtonBorder from '../../../../components/ButtonBorder'
+import ButtonLinkPurple from '../../../../components/ButtonLinkPurple'
+import course from '../../../../jsons/course.json'
+import CardManageCourse from '../../../../components/CardManageCourse'
+import type { DataCourse } from '../../../../types'
+import PaginationNumber from '../../../../components/PaginationNumber'
 
 const ManagerCourse: FC = () => {
     // state pagination active

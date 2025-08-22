@@ -1,9 +1,9 @@
 import { type FC } from 'react'
-import CardLatestStudent from '../../../components/CardLatestStudent'
-import students from '../../../jsons/students.json'
-import course from '../../../jsons/course.json'
-import type { DataStudent, DataCourse } from '../../../types'
-import CardLatestCourse from '../../../components/CardLatestCourse'
+import CardLatestStudent from '../../../../components/CardLatestStudent'
+import students from '../../../../jsons/students.json'
+import course from '../../../../jsons/course.json'
+import type { DataStudent, DataCourse } from '../../../../types'
+import CardLatestCourse from '../../../../components/CardLatestCourse'
 
 const ContentLatest: FC = () => {
     return (

@@ -1,11 +1,11 @@
 import { type FC } from 'react'
-import ButtonPurple from '../../components/ButtonPurple'
-import ButtonLinkBorder from '../../components/ButtonLinkBorder'
+import ButtonPurple from '../../../components/ButtonPurple'
+import ButtonLinkBorder from '../../../components/ButtonLinkBorder'
 import ContentData from './ContentData'
 import ContentLatest from './ContentLatest'
-import HeaderContentDashboard from '../../components/HeaderContentDahsboard'
+import HeaderContentDashboard from '../../../components/HeaderContentDahsboard'
 
-const Manager: FC = () => {
+const ManagerOverview: FC = () => {
 
     // data chart 
     const dataChart = [
@@ -43,4 +43,4 @@ const Manager: FC = () => {
 
 
 
-export default Manager
+export default ManagerOverview

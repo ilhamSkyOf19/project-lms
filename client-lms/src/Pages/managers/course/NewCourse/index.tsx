@@ -1,14 +1,17 @@
-import { useRef, useState, type ChangeEvent, type FC } from 'react'
-import HeaderContentDashboard from '../../components/HeaderContentDahsboard'
-import ButtonBorder from '../../components/ButtonBorder'
-import BoxInputData from '../../components/BoxInputData'
-import BoxInputChoose from '../../components/BoxInputChoose'
-import ButtonPurple from '../../components/ButtonPurple'
+import { useEffect, useRef, useState, type ChangeEvent, type FC, type FormEvent } from 'react'
+import HeaderContentDashboard from '../../../../components/HeaderContentDahsboard'
+import ButtonBorder from '../../../../components/ButtonBorder'
+import BoxInputData from '../../../../components/BoxInputData'
+import BoxInputChoose from '../../../../components/BoxInputChoose'
+import ButtonPurple from '../../../../components/ButtonPurple'
+import ButtonTrash from '../../../../components/ButtonTrash'
+import clsx from 'clsx'
 
 const NewCourse: FC = () => {
     // state input
     const [inputImg, setInputImg] = useState<string>('');
     const [category, setCategory] = useState<string>('');
+    const [thumbnailEmpty, setThumbnailEmpty] = useState<boolean>(false);
 
 
     // handle category 
@@ -18,9 +21,24 @@ const NewCourse: FC = () => {
 
 
 
+    // handle submit
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-    // memoization
-    const InputThumbnailMemo = () => <InputThumbnail inputImg={inputImg} setInputImg={setInputImg} />
+        const formData = new FormData(event.currentTarget);
+        const file = formData.get("thumbnail") as File;
+
+        if (file.name === '') {
+            setThumbnailEmpty(true);
+            return;
+        }
+
+        console.log(file);
+    }
+
+
+
+
 
     return (
         <div className='w-full min-h-[100vh] flex flex-col justify-start items-start gap-8'>
@@ -33,12 +51,12 @@ const NewCourse: FC = () => {
             {/* content */}
             <div className='bg-[#F8FAFB] w-[60%] flex flex-col justify-start items-center p-8 rounded-3xl overflow-x-hidden gap-12'>
                 {/* form add */}
-                <form className='w-full flex flex-col justify-start items-start gap-8'>
+                <form onSubmit={handleSubmit} className='w-full flex flex-col justify-start items-start gap-8'>
                     {/* input course name */}
                     <BoxInputData type='text' name='courseName' icon='note-favorite-black.svg' label='course name' placeholder='Write better name for your course' />
 
                     {/* add thummbnail */}
-                    {InputThumbnailMemo()}
+                    <InputThumbnail inputImg={inputImg} setInputImg={setInputImg} thumbnailEmpty={thumbnailEmpty} setThumbnailEmpty={setThumbnailEmpty} />
 
                     {/* tagline */}
                     <BoxInputData type='text' name='tagline' icon='bill-black.svg' label='course tagline' placeholder='Write tagline for better copy' />
@@ -63,11 +81,13 @@ const NewCourse: FC = () => {
 
 
 type PropsInputThumbnail = {
+    setThumbnailEmpty: (thumbnailEmpty: boolean) => void
+    thumbnailEmpty: boolean
     setInputImg: (inputImg: string) => void;
     inputImg: string
 }
 
-const InputThumbnail: FC<PropsInputThumbnail> = ({ setInputImg, inputImg }) => {
+const InputThumbnail: FC<PropsInputThumbnail> = ({ setThumbnailEmpty, thumbnailEmpty, setInputImg, inputImg }) => {
     const [preview, setPreview] = useState<string>('');
     // ref input thumbnail
     const refInputThumb = useRef<HTMLInputElement>(null);
@@ -96,6 +116,13 @@ const InputThumbnail: FC<PropsInputThumbnail> = ({ setInputImg, inputImg }) => {
         }
     }
 
+    // handle avatar empty
+    useEffect(() => {
+        if (preview !== '') {
+            setThumbnailEmpty(false);
+        }
+    }, [preview])
+
 
     return (
         <div className='w-full flex flex-col justify-start items-start gap-3'>
@@ -110,8 +137,11 @@ const InputThumbnail: FC<PropsInputThumbnail> = ({ setInputImg, inputImg }) => {
                 accept='image/*'
                 className='hidden'
                 onChange={handleChangeInputImg}
-                required />
-            <div className='w-full h-[14rem] flex flex-row justify-center items-center gap-3 relative border border-[#CFDBEF] rounded-3xl overflow-hidden'>
+            />
+            <div className={clsx(
+                'w-full h-[14rem] flex flex-row justify-center items-center gap-3 relative border rounded-3xl overflow-hidden transition-all duration-200',
+                thumbnailEmpty ? 'border-red-500 ring-1 ring-red-500' : 'border-[#CFDBEF]'
+            )}>
                 {
                     inputImg === '' && preview === '' ? (
                         <button type='button' className='w-full h-[14rem] flex flex-row justify-center items-center gap-3' onClick={handleClickInputThumb}>
@@ -125,13 +155,18 @@ const InputThumbnail: FC<PropsInputThumbnail> = ({ setInputImg, inputImg }) => {
                             <img src={preview} className='w-full h-full object-cover' loading='lazy' alt='thumbnail' />
 
                             {/* trash */}
-                            <button type='button' className='absolute right-3 bottom-3' onClick={handleResetInputImg}>
-                                <img src="/assets/images/icons/delete.svg" alt="trash" className='w-12' />
-                            </button>
+                            <div className='absolute right-3 bottom-3'>
+                                <ButtonTrash handleOnClick={handleResetInputImg} />
+                            </div>
                         </div>
                     )
                 }
             </div>
+            {
+                thumbnailEmpty && (
+                    <p className='text-red-500 text-sm'>Thumbnail is required</p>
+                )
+            }
 
         </div>
     )

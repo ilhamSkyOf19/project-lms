@@ -4,12 +4,13 @@ import { type FC } from 'react'
 type Props = {
     label: string;
     width?: string
-    type?: 'button' | 'submit';
+    type?: 'button' | 'submit' | 'reset';
+    name?: string
 }
 
-const ButtonBorder: FC<Props> = ({ width, label, type }) => {
+const ButtonBorder: FC<Props> = ({ width, label, type, name }) => {
     return (
-        <button type={type ? type : 'button'} className={clsx(
+        <button name={name} type={type ? type : 'button'} className={clsx(
             ' py-3.5 rounded-full text-black border font-semibold capitalize flex flex-row justify-center items-center text-sm hover:scale-105 transition-all duration-300',
             width ? `w-${width}` : 'px-6'
         )}>

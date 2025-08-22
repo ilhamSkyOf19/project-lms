@@ -1,12 +1,12 @@
 import { useEffect, useState, type FC } from 'react'
-import LinkRoute from '../../components/LinkRoute'
+import LinkRoute from '../../../../components/LinkRoute'
 import { useParams } from 'react-router'
-import course from '../../jsons/course.json'
-import type { DataCourse } from '../../types'
-import BoxInputData from '../../components/BoxInputData'
-import BoxInputChoose from '../../components/BoxInputChoose'
-import ButtonBorder from '../../components/ButtonBorder'
-import ButtonPurple from '../../components/ButtonPurple'
+import course from '../../../../jsons/course.json'
+import type { DataCourse } from '../../../../types'
+import BoxInputData from '../../../../components/BoxInputData'
+import BoxInputChoose from '../../../../components/BoxInputChoose'
+import ButtonBorder from '../../../../components/ButtonBorder'
+import ButtonPurple from '../../../../components/ButtonPurple'
 
 const AddContentCourse: FC = () => {
     const [thumb, setThumb] = useState<string>('');
