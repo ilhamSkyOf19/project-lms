@@ -84,7 +84,7 @@ const AddContentCourse: FC = () => {
                                     content text
                                 </label>
                                 <Editor
-                                    apiKey='6uh4pu477wnprxe2jbwlz8dhgg7h142a0o1hldypdxe041d9'
+                                    apiKey={import.meta.env.VITE_API_TINYMCE_KEY}
                                     init={{
                                         height: 400,
                                         width: "100%",
