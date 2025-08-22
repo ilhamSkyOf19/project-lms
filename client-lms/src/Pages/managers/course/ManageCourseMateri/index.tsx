@@ -29,13 +29,15 @@ const ManageCourseMateri: FC = () => {
     // handle data course
     useEffect(() => {
         if (id) {
-            const getData = (course as DataCourse[]).find((course) => course.id === id);
+            const getData = (course as DataCourse[]).find((item) => item.id === id);
 
             if (getData) {
                 setData(getData as DataCourse);
             }
         }
     }, [id])
+
+    console.log(data)
 
 
     // handle pagination

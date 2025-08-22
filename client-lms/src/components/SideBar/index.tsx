@@ -89,7 +89,7 @@ const ContainerMenu: FC<PropsContainerMenu> = ({ label, menu }) => {
             <div className='w-full flex flex-col justify-start items-start gap-3.5'>
                 {
                     menu.map((item, i) => (
-                        <ButtonMenuSideBar key={i} link={item.link} icon={item.icon} label={item.label} active={location.pathname === item.link} />
+                        <ButtonMenuSideBar key={i} link={item.link} icon={item.icon} label={item.label} active={i === 0 ? location.pathname === item.link : location.pathname.startsWith(item.link)} />
                     ))
                 }
             </div>
