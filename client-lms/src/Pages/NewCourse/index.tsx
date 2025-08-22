@@ -44,7 +44,7 @@ const NewCourse: FC = () => {
                     <BoxInputData type='text' name='tagline' icon='bill-black.svg' label='course tagline' placeholder='Write tagline for better copy' />
 
                     {/* category */}
-                    <BoxInputChoose name='category' icon='bill-black.svg' label='select category' value={category} chooses={['Programming', 'Design', 'Marketing']} handleOnChange={handleCategory} />
+                    <BoxInputChoose name='category' icon='bill-black.svg' label='select category' value={category} chooses={['Programming', 'Design', 'Marketing']} handleOnChange={handleCategory} placeholder='Choose one category' />
 
                     {/* text area */}
                     <BoxInputData type='textarea' name='description' icon='note-black.png' label='description' placeholder='Write better description for your course' />

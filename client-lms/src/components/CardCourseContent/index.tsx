@@ -1,14 +1,18 @@
 import { type FC } from 'react'
 import type { DataContent } from '../../types'
+import CircleNumber from '../CircleNumber'
 
 type Props = {
+    number: number;
     data: DataContent
 }
-const CardCourseContent: FC<Props> = ({ data: { name, category } }) => {
+const CardCourseContent: FC<Props> = ({ number, data: { name, category } }) => {
     return (
-        <div className='w-full h-[8rem] flex flex-row justify-start items-center gap-5'>
+        <div className='w-full h-[8rem] flex flex-row justify-start items-center gap-5 relative'>
+            {/* number */}
+            <CircleNumber number={number} />
             {/* content */}
-            <div className='w-[9.5rem] h-[90%] rounded-3xl bg-primary-black relative overflow-hidden flex flex-col justify-center items-center'>
+            <div className='w-[12.5rem] h-[90%] rounded-3xl bg-primary-black relative overflow-hidden flex flex-col justify-center items-center'>
                 {/* circle glow */}
                 <div className='absolute w-[10rem] h-[10rem] rounded-full bg-gradient-to-l to-white from-primary-purple z-0 top-[50%] blur-xl opacity-60' />
                 {/* icon */}
@@ -16,7 +20,7 @@ const CardCourseContent: FC<Props> = ({ data: { name, category } }) => {
             </div>
 
             {/* desc */}
-            <div className='h-full flex flex-col justify-center items-center gap-2'>
+            <div className='w-full h-full flex flex-col justify-center items-center gap-2'>
                 {/* name */}
                 <h2 className='font-bold text-xl'>
                     {name}

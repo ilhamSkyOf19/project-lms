@@ -1,6 +1,5 @@
-import clsx from 'clsx';
 import { useEffect, useState, type FC } from 'react'
-import { Link, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import HeaderContentDashboard from '../../components/HeaderContentDahsboard';
 import ButtonBorder from '../../components/ButtonBorder';
 import ButtonLinkPurple from '../../components/ButtonLinkPurple';
@@ -12,6 +11,7 @@ import CardCourseContent from '../../components/CardCourseContent';
 import ButtonLinkBorder from '../../components/ButtonLinkBorder';
 import ButtonDelete from '../../components/ButtonnDelete';
 import PaginationNumber from '../../components/PaginationNumber';
+import LinkRoute from '../../components/LinkRoute';
 
 const ManageCourseMateri: FC = () => {
     // state pagunation active
@@ -45,13 +45,10 @@ const ManageCourseMateri: FC = () => {
     return (
         <div className='w-full min-h-[100vh] flex flex-col justify-start items-start gap-8'>
             {/* link route */}
-            <div className='flex flex-row justify-start items-start gap-4'>
-                <LinkRoute link='/manager' label='dashboard' />
-                <p>/</p>
-                <LinkRoute link='/manager/course' label='manage course' />
-                <p>/</p>
-                <LinkRoute link={`/manager/course/manage-course-materi/${id}`} label='detail' />
-            </div>
+            <LinkRoute link={[
+                { link: '/manager', label: 'dashboard' },
+                { link: '/manager/course', label: 'manage course' },
+                { link: `/manager/course/manage-course-materi/${id}`, label: 'detail' }]} />
 
             {/* header content */}
             <HeaderContentDashboard header={data?.name as string} desc=''>
@@ -86,7 +83,7 @@ const ManageCourseMateri: FC = () => {
                     {/* title */}
                     <h1 className='font-bold capitalize text-2xl text-black'>course content</h1>
                     {/* button */}
-                    <ButtonLinkPurple link='#' label='add content' />
+                    <ButtonLinkPurple link={`/manager/course/manage-course-materi/${id}/add-content`} label='add content' />
                 </div>
 
                 {/* card course */}
@@ -96,7 +93,7 @@ const ManageCourseMateri: FC = () => {
                         data?.contentList.map((item, index) => (
                             <div key={index} className='w-full flex flex-row justify-between items-center'>
                                 <div className='flex-2 flex flex-row justify-start items-center'>
-                                    <CardCourseContent data={item} />
+                                    <CardCourseContent data={item} number={index + 1} />
                                 </div>
                                 {/* button */}
                                 <div className='flex-1 flex flex-row justify-end items-center gap-3'>
@@ -121,18 +118,6 @@ const ManageCourseMateri: FC = () => {
 }
 
 
-type PropsLinkRoute = {
-    link: string;
-    label: string;
-}
-// link route
-const LinkRoute: FC<PropsLinkRoute> = ({ link, label }) => {
-    return (
-        <Link to={`${link}`} className={clsx(
-            'text-md text-black capitalize hover:text-primary-purple hover:underline',
-            label === 'detail' && 'font-semibold'
-        )}>{label}</Link>
-    )
-}
+
 
 export default ManageCourseMateri

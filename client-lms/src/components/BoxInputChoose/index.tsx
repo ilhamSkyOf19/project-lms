@@ -9,8 +9,9 @@ type Props = {
     value: string;
     handleOnChange: (option: string) => void
     chooses: string[]
+    placeholder: string
 }
-const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOnChange }) => {
+const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOnChange, placeholder }) => {
     // state option
     const [optionActive, setOptionActive] = useState<boolean>(false);
     // ref option & ref input & ref button arrow down
@@ -57,7 +58,7 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
                     type='text'
                     name={name}
                     id={name}
-                    value={value === '' ? 'Choose one category' : value}
+                    value={value === '' ? placeholder : value}
                     readOnly
                     className='appearance-none outline-none bg-transparent w-full font-semibold text-black placeholder:font-normal placeholder:text-[#6B6C7F] h-full relative cursor-pointer capitalize'
                     onClick={() => setOptionActive(!optionActive)}
@@ -79,8 +80,8 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
                 }
 
                 {/* arrow down */}
-                <button ref={buttonRef} type='button' className='w-6 h-6 flex flex-col justify-center items-center' onClick={() => setOptionActive(!optionActive)}>
-                    <img src="/assets/images/icons/arrow-down.svg" alt="arrow" className="w-6 h-6" />
+                <button ref={buttonRef} type='button' className='w-6.5 h-full flex flex-col justify-center items-center' onClick={() => setOptionActive(!optionActive)}>
+                    <img src="/assets/images/icons/arrow-down.svg" alt="arrow" className="w-full" />
                 </button>
             </div>
         </div>

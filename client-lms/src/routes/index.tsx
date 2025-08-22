@@ -11,6 +11,7 @@ import ManagerStudents from "../Pages/ManagerStudents";
 import NotFound from "../Pages/NotFound";
 import NewCourse from "../Pages/NewCourse";
 import ManageCourseMateri from "../Pages/ManageCourseMateri";
+import AddContentCourse from "../Pages/AddContentCourse";
 
 const route = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ const route = createBrowserRouter([
             {
                 path: "/manager/course/manage-course-materi/:id",
                 element: <ManageCourseMateri />,
+            },
+            {
+                path: "/manager/course/manage-course-materi/:id/add-content",
+                element: <AddContentCourse />,
             },
             {
                 path: "/manager/students",
