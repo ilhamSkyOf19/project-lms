@@ -46,5 +46,8 @@ export type DataCourse = {
 export type DataContent = {
     id: string;
     name: string;
-    category: 'video' | 'text'
+    category: 'video' | 'text';
+    complete: boolean;
+    contentVideo: string;
+    contentText: string;
 }

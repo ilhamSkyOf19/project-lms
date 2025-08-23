@@ -58,7 +58,7 @@ const ManageCourseMateri: FC = () => {
                 {/* edit course */}
                 <ButtonBorder label='edit course' />
                 {/* preview */}
-                <ButtonLinkPurple link={`/manager/course/manage-course-materi/${id}/preview/1`} label='preview' />
+                <ButtonLinkPurple link={`/manager/course/manage-course-materi/${id}/preview/${data?.contentList?.[0].id}`} label='preview' />
             </HeaderContentDashboard>
 
             {/* content information */}

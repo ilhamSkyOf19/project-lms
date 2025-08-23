@@ -39,6 +39,8 @@ const AddContentCourse: FC = () => {
         setContentType(option);
     }
 
+    // console.log(import.meta.env.VITE_API_TINYMCE_KEY)
+
 
     return (
         <div className='w-full min-h-[100vh] flex flex-col justify-start items-start gap-8'>
@@ -84,14 +86,19 @@ const AddContentCourse: FC = () => {
                                     content text
                                 </label>
                                 <Editor
-                                    apiKey={import.meta.env.VITE_API_TINYMCE_KEY}
+                                    apiKey={`${import.meta.env.VITE_API_TINYMCE_KEY?.trim()}`}
                                     init={{
                                         height: 400,
                                         width: "100%",
                                         menubar: false,
-                                        plugins: 'lists link image table code',
-                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | code',
+                                        plugins: 'lists link image table code codesample image',
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | code | codesample | image',
                                         placeholder: "Write your content text...",
+                                        codesample_languages: [
+                                            { text: 'PHP', value: 'php' },
+                                            { text: 'JavaScript', value: 'javascript' },
+                                            { text: 'HTML/XML', value: 'markup' }
+                                        ]
                                     }}
                                     onEditorChange={(content) => console.log(content)}
                                 />

@@ -77,8 +77,8 @@ const route = createBrowserRouter([
                 path: "/manager/students/add-student",
                 element: <AddStudent />,
             }
-
         ]
+
     },
 ]);
 

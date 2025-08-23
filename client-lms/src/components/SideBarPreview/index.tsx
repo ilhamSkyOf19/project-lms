@@ -22,7 +22,7 @@ const SideBarPreview: FC = () => {
         }
     }, [id])
 
-    console.log(idContent)
+    // console.log(idContent)
 
 
     return (
@@ -50,7 +50,7 @@ const SideBarPreview: FC = () => {
                     {/* card */}
                     {
                         dataCourse?.contentList.map((item, i) => (
-                            <CardCourseContentPreview key={i} icon={item.category} name={item.name} active={idContent === (i + 1).toString()} />
+                            <CardCourseContentPreview key={i} icon={item.category} name={item.name} active={idContent === item.id} link={`/manager/course/manage-course-materi/${id}/preview/${item.id}`} />
 
                         ))
                     }
