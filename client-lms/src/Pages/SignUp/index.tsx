@@ -2,7 +2,11 @@ import { type FC } from 'react'
 import FormSignUp from '../../assets/fragments/FormSignUp'
 import LayoutGlobal from '../../Layouts/LayoutGlobal'
 
+
 const SignUp: FC = () => {
+
+
+
     return (
         <LayoutGlobal>
             <div className='w-full h-full flex flex-row justify-center items-center gap-24'>
