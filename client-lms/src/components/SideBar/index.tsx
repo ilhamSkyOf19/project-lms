@@ -3,7 +3,10 @@ import ButtonMenuSideBar from '../ButtonMenuSideBar'
 import type { MenuSidebar } from '../../types'
 import { useLocation } from 'react-router'
 
-const SideBar: FC = () => {
+type Props = {
+    role: 'manager' | 'student'
+}
+const SideBar: FC<Props> = ({ role }) => {
 
     // menu general
     const menuGeneral: MenuSidebar[] = [
@@ -61,7 +64,7 @@ const SideBar: FC = () => {
                     </h1>
                 </div>
                 {/* menu general */}
-                <ContainerMenu menu={menuGeneral} label={'general'} />
+                <ContainerMenu menu={menuGeneral} label={'general'} role={role} />
                 {/* menu general */}
                 <ContainerMenu menu={menuOthers} label={'others'} />
             </div>
@@ -71,11 +74,12 @@ const SideBar: FC = () => {
 
 
 type PropsContainerMenu = {
+    role?: 'manager' | 'student';
     label: string;
     menu: MenuSidebar[];
 }
 // contianer menu 
-const ContainerMenu: FC<PropsContainerMenu> = ({ label, menu }) => {
+const ContainerMenu: FC<PropsContainerMenu> = ({ role, label, menu }) => {
 
     // cek location path
     const location = useLocation();
@@ -89,7 +93,15 @@ const ContainerMenu: FC<PropsContainerMenu> = ({ label, menu }) => {
             <div className='w-full flex flex-col justify-start items-start gap-3.5'>
                 {
                     menu.map((item, i) => (
-                        <ButtonMenuSideBar key={i} link={item.link} icon={item.icon} label={item.label} active={i === 0 ? location.pathname === item.link : location.pathname.startsWith(item.link)} />
+                        label === 'general' && role === 'student' ? (
+                            i === 0 ? (
+                                <ButtonMenuSideBar key={i} link={'/student'} icon={item.icon} label={item.label} active={true} />
+                            ) : (
+                                null
+                            )
+                        ) : (
+                            <ButtonMenuSideBar key={i} link={item.link} icon={item.icon} label={item.label} active={i === 0 ? location.pathname === item.link : location.pathname.startsWith(item.link)} />
+                        )
                     ))
                 }
             </div>

@@ -4,7 +4,10 @@ import { Link } from 'react-router'
 import { useParams } from 'react-router'
 import course from '../../jsons/course.json'
 import CardCourseContentPreview from '../CardCourseContentPreview'
-const SideBarPreview: FC = () => {
+type Props = {
+    role: 'manager' | 'student'
+}
+const SideBarPreview: FC<Props> = ({ role }) => {
 
     // state data course
     const [dataCourse, setDataCourse] = useState<DataCourse>();
@@ -34,7 +37,7 @@ const SideBarPreview: FC = () => {
             <div className='flex-1 w-full flex flex-col justify-start items-center bg-transparent backdrop-blur-2xl py-8 px-8 gap-9 overflow-y-scroll hide-scrollbar'>
                 {/* link back dashboard */}
                 <div className='w-full flex flex-col justify-start items-start'>
-                    <Link to='/manager' className='font-semibold text-white text-md capitalize hover:underline mb-8'>back to dashboard</Link>
+                    <Link to={role === 'student' ? '/student' : '/manager'} className='font-semibold text-white text-md capitalize hover:underline mb-8'>back to dashboard</Link>
                     {/* thumb */}
                     <div className='w-[9rem] h-[8rem] flex flex-row justify-center items-center rounded-2xl overflow-hidden mb-4'>
                         <img src={`/assets/images/thumbnails/${dataCourse?.img}`} alt="thumbnail" className='w-full h-full object-cover' />
@@ -50,7 +53,7 @@ const SideBarPreview: FC = () => {
                     {/* card */}
                     {
                         dataCourse?.contentList.map((item, i) => (
-                            <CardCourseContentPreview key={i} icon={item.category} name={item.name} active={idContent === item.id} link={`/manager/course/manage-course-materi/${id}/preview/${item.id}`} />
+                            <CardCourseContentPreview key={i} icon={item.category} name={item.name} active={idContent === item.id} link={role === 'student' ? `/student/course/${id}/preview/${item.id}` : `/manager/course/manage-course-materi/${id}/preview/${item.id}`} />
 
                         ))
                     }

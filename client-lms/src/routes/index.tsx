@@ -14,6 +14,7 @@ import AddContentCourse from "../Pages/managers/course/AddContentCourse";
 import ManagerStudents from "../Pages/managers/student/ManagerStudents";
 import AddStudent from "../Pages/managers/student/AddStudent";
 import Preview from "../Pages/Preview";
+import Student from "../Pages/Student";
 
 const route = createBrowserRouter([
     {
@@ -42,7 +43,7 @@ const route = createBrowserRouter([
     },
     {
         path: "/manager",
-        element: <LayoutDashboard />,
+        element: <LayoutDashboard role="manager" />,
         children: [
             {
                 index: true,
@@ -80,6 +81,20 @@ const route = createBrowserRouter([
         ]
 
     },
+    {
+        path: "/student",
+        element: <LayoutDashboard role="student" />,
+        children: [
+            {
+                index: true,
+                element: <Student />
+            },
+            {
+                path: '/student/course/:id/preview/:idContent',
+                element: <Preview />
+            }
+        ]
+    }
 ]);
 
 

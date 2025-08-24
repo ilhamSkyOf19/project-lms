@@ -22,10 +22,12 @@ export type DataChart = {
 
 // types data student
 export type DataStudent = {
+    id: string;
     name: string;
     totalCourse: number;
     statusCourse: boolean;
     img: 'photo-1' | 'photo-2.png' | 'photo-3.png' | 'photo-4.png' | 'photo-5.png';
+    courseId: string[];
 }
 
 

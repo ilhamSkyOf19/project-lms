@@ -1,32 +1,60 @@
 [
     {
+        "id": "1",
         "name": "Yulia Putri",
         "totalCourse": 182,
         "statusCourse": true,
-        "img": "photo-2.png"
+        "img": "photo-2.png",
+        "courseId": [
+            "2",
+            "5",
+            "1"
+        ]
     },
     {
+        "id": "2",
         "name": "Angga Risky Setiawan",
         "totalCourse": 95,
         "statusCourse": true,
-        "img": "photo-3.png"
+        "img": "photo-3.png",
+        "courseId": [
+            "4",
+            "1"
+        ]
     },
     {
+        "id": "3",
         "name": "Dewi Lestari",
         "totalCourse": 210,
         "statusCourse": true,
-        "img": "photo-4.png"
+        "img": "photo-4.png",
+        "courseId": [
+            "5",
+            "2",
+            "3",
+            "1"
+        ]
     },
     {
+        "id": "4",
         "name": "Budi Santoso",
         "totalCourse": 76,
         "statusCourse": true,
-        "img": "photo-5.png"
+        "img": "photo-5.png",
+        "courseId": [
+            "3"
+        ]
     },
     {
+        "id": "5",
         "name": "Rizky Ananda",
         "totalCourse": 134,
         "statusCourse": true,
-        "img": "photo-4.png"
+        "img": "photo-4.png",
+        "courseId": [
+            "2",
+            "4",
+            "5"
+        ]
     }
 ]

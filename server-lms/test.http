@@ -1,0 +1,27 @@
+# Start Course API Testing
+
+
+# GET http://localhost:3000/api/course
+# POST http://localhost:3000/api/course
+# Content-Type: application/json
+
+# {
+#   "name": "My Course",
+#   "description": "Deskripsi opsional"
+# }
+
+# End Course API Testing
+
+
+# Start Auth API Testing
+
+# POST http://localhost:3000/api/sign-up
+# Content-Type: application/json
+
+# {
+#   "name": "ilham",
+#   "email": "ilham@gmail.com",
+#   "photo": "default.jpg",
+#   "password": "123",
+#   "role": "manager"
+# }

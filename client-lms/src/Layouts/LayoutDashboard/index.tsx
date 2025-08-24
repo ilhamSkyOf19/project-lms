@@ -5,11 +5,13 @@ import HeaderDashboard from '../../components/HeaderDashboard';
 import SideBarPreview from '../../components/SideBarPreview';
 import clsx from 'clsx';
 
-
-const LayoutDashboard: FC = () => {
+type Props = {
+    role: 'manager' | 'student'
+}
+const LayoutDashboard: FC<Props> = ({ role }) => {
 
     // use match 
-    const preview = useMatch('/manager/course/manage-course-materi/:id/preview/:idContent');
+    const preview = useMatch('/manager/course/manage-course-materi/:id/preview/:idContent') || useMatch('/student/course/:id/preview/:idContent');
 
 
     return (
@@ -21,9 +23,9 @@ const LayoutDashboard: FC = () => {
             )}>
                 {
                     preview ? (
-                        <SideBarPreview />
+                        <SideBarPreview role={role} />
                     ) : (
-                        <SideBar />
+                        <SideBar role={role} />
                     )
                 }
             </div>

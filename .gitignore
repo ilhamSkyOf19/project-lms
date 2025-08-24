@@ -1,2 +1,4 @@
 client-lms/.env
 client-lms/node_modules
+server-lms/.env
+server-lms/node_modules
