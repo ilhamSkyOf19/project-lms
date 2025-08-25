@@ -19,7 +19,7 @@ const handlePayment = async (req: Request<{}, {}, MidtransWebhook>, res: Respons
     try {
         const body = req.body
 
-        const order_id = req.body.order_id
+        const order_id = body.order_id
 
 
         switch (body.transaction_status) {

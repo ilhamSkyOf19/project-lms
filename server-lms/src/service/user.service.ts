@@ -1,4 +1,4 @@
-import {  UserRequestType } from "../model/user-model";
+import { UserRequestType } from "../model/user-model";
 import UserSchema from "../schema/userSchema";
 import { TransactionService } from "./transaction.service";
 
@@ -19,6 +19,7 @@ export class UserService {
 
 
         const midtrans = await TransactionService.pay({ user: user.id, price: 100000, email: user.email });
+
         await user.save();
         return midtrans;
 

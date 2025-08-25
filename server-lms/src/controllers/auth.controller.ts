@@ -10,9 +10,9 @@ export class AuthController {
             // get body
             const body = req.body;
 
-            // mid transaction
             // hash password
             const hashPassword = await bcrypt.hash(body.password, 10);
+            // response 
             const response = await UserService.create({ ...body, password: hashPassword });
 
 
@@ -23,8 +23,11 @@ export class AuthController {
                     midtrans_payment_url: response
                 }
             });
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
+            // error email
+            if (error.code === 11000 && error.keyValue?.email) return res.status(400).json({ message: "Email already exists" });
+
             return res.status(500).json({
                 message: "Internal Server Error"
             });
