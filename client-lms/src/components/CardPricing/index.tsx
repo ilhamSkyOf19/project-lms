@@ -5,9 +5,11 @@ import { formatCurrency } from '../../helper/formatCurrency';
 type Props = {
     type: 'regular' | 'premium';
     country: string;
+    handleSubmit: () => void
+    isPending: boolean
 }
 
-const CardPricing: FC<Props> = ({ type, country }) => {
+const CardPricing: FC<Props> = ({ type, country, handleSubmit, isPending }) => {
     // state pricing active
     const [ragular, setRagular] = useState<boolean>(false);
     const [premium, setPremium] = useState<boolean>(false);
@@ -99,7 +101,7 @@ const CardPricing: FC<Props> = ({ type, country }) => {
                             </div>
                         ) : (
                             <>
-                                <button type='button' className='w-full text-white py-4 bg-primary-purple rounded-full text-md font-semibold capitalize'>
+                                <button type='button' onClick={handleSubmit} disabled={isPending} className='w-full text-white py-4 bg-primary-purple rounded-full text-md font-semibold capitalize'>
                                     choose this plan
                                 </button>
                             </>

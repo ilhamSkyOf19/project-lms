@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { UserRequestType } from "../model/user-model";
 import bcrypt from "bcrypt"
 import { UserService } from "../service/user.service";
-import { TransactionService } from "../service/transaction.service";
 
 export class AuthController {
     // create

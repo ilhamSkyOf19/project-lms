@@ -5,9 +5,9 @@ dotenv.config()
 
 
 import corsMiddelware from "./middlewares/corsMiddleware";
-import courseRoutes from "./routes/courseRoutes";
 import { connectDB } from "./db/db";
 import authRoutes from "./routes/auth.route";
+import paymentRoutes from "./routes/payment.route";
 const app: express.Application = express();
 
 
@@ -21,8 +21,11 @@ app.use(corsMiddelware);
 app.use(express.json());
 
 // routes
-app.use("/api", courseRoutes);
+app.get("/", (req: express.Request, res: express.Response) => res.send("Hello World!"));
+
+
 app.use("/api", authRoutes);
+app.use("/api", paymentRoutes);
 
 
 

@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { memo, type FC } from 'react'
 import BoxInput from '../../../components/BoxInput'
 import { Link } from 'react-router'
 import TitleSign from '../../../components/TitleSign'
@@ -9,14 +9,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { type SignUpRequestType } from '../../../model/auth-model';
 import { AuthValidation } from '../../../validation/auth-validation'
 
-const FormSignUp: FC = () => {
+type Props = {
+    setMode: (mode: "AUTH" | "PRICING") => void;
+    setDataSignUp: (data: SignUpRequestType) => void;
+}
+const FormSignUp: FC<Props> = ({ setMode, setDataSignUp }) => {
+
     // use form 
     const { register, handleSubmit, formState: { errors } } = useForm<SignUpRequestType>({
         resolver: zodResolver(AuthValidation.signUp)
     })
 
     const onSubmit = (data: SignUpRequestType) => {
-        console.log(data);
+        setDataSignUp(data);
+        setMode('PRICING');
     }
 
     return (
@@ -43,10 +49,8 @@ const FormSignUp: FC = () => {
                 {/* button */}
                 <ButtonSign label='sign up now' />
             </div>
-
-
         </form>
     )
 }
 
-export default FormSignUp
+export default memo(FormSignUp)

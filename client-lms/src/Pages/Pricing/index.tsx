@@ -1,8 +1,41 @@
-import { type FC } from 'react'
+import { memo, type FC } from 'react'
 import LayoutGlobal from '../../Layouts/LayoutGlobal'
 import CardPricing from '../../components/CardPricing'
+import type { SignUpRequestType } from '../../model/auth-model'
+import { useMutation } from '@tanstack/react-query'
+import { AuthService } from '../../service/auth.service'
 
-const Pricing: FC = () => {
+type Props = {
+    data: SignUpRequestType;
+}
+
+const Pricing: FC<Props> = ({ data }) => {
+
+    // handle mutation
+    const { isPending, mutateAsync } = useMutation({
+        mutationFn: (data: SignUpRequestType) => AuthService.signUp({ ...data, photo: 'default.jpg', role: 'manager' }),
+    })
+
+    // handle submit 
+    const handleSubmit = async () => {
+        try {
+
+            if (!data) {
+                return
+            }
+
+
+            // response 
+            const response = await mutateAsync(data);
+            window.location.replace(response.midtrans_payment_url.redirect_url);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    console.log(data);
     return (
         <LayoutGlobal>
             {/* title */}
@@ -18,14 +51,14 @@ const Pricing: FC = () => {
             <div className='w-full flex flex-row justify-start items-start gap-8 py-12'>
                 {/* card 1 */}
                 <div className='w-full flex flex-row justify-end items-center'>
-                    <CardPricing type='regular' country='id_ID' />
+                    <CardPricing type='regular' country='id_ID' handleSubmit={handleSubmit} isPending={isPending} />
                 </div>
                 <div className='w-full flex flex-row justify-start items-center'>
-                    <CardPricing type='premium' country='id_ID' />
+                    <CardPricing type='premium' country='id_ID' handleSubmit={handleSubmit} isPending={isPending} />
                 </div>
             </div>
         </LayoutGlobal>
     )
 }
 
-export default Pricing
+export default memo(Pricing)
