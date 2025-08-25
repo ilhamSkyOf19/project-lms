@@ -9,7 +9,7 @@ import { ResponseService } from '../utils/type';
 
 export class LoginController {
     // login 
-    static async create(req: Request<{}, {}, LoginRequestType>, res: Response<ResponseService<LoginResponseType>>) {
+    static async create(req: Request<{}, {}, LoginRequestType>, res: Response<ResponseService<{ message: string, role: 'manager' | 'student' }>>) {
         try {
             // get parameter 
             const body = req.body;
@@ -24,10 +24,22 @@ export class LoginController {
                 })
             }
 
+            res.cookie("token", login.data.token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                maxAge: 24 * 60 * 60 * 1000
+            })
+
+
+
 
             return res.status(200).json({
                 success: true,
-                data: login.data
+                data: {
+                    message: "Login Success",
+                    role: login.data.role
+                }
             });
         } catch (error) {
             console.log(error);

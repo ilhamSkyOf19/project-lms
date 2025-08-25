@@ -8,6 +8,9 @@ import corsMiddelware from "./middlewares/corsMiddleware";
 import { connectDB } from "./db/db";
 import authRoutes from "./routes/auth.route";
 import paymentRoutes from "./routes/payment.route";
+import cookieParser from 'cookie-parser';
+
+
 const app: express.Application = express();
 
 
@@ -19,6 +22,9 @@ connectDB();
 app.use(corsMiddelware);
 // json
 app.use(express.json());
+
+// cookie 
+app.use(cookieParser());
 
 // routes
 app.get("/", (req: express.Request, res: express.Response) => res.send("Hello World!"));

@@ -7,7 +7,7 @@ export type LoginResponseType = {
     token: string,
     name: string,
     email: string
-    role: string,
+    role: 'manager' | 'student',
 }
 
 

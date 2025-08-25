@@ -14,7 +14,7 @@ const BoxInput: FC<Props> = ({ type, register, error }) => {
         <div className='w-full flex flex-col justify-start items-start gap-1'>
             <div className={clsx(
                 'w-full px-5 py-3.5 rounded-full flex flex-row justify-start items-center bg-primary-black border border-[#24283E] gap-2 shadow-inset-light  transition-all duration-300',
-                error ? 'focus-within:ring-2 focus-within:ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-purple focus-within:shadow-[-10px_-6px_10px_0_#bd00ff_inset]'
+                error ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-purple focus-within:shadow-[-10px_-6px_10px_0_#bd00ff_inset]'
             )}>
                 {/* icons */}
                 <label htmlFor={type} className='w-6 h-6 flex flex-col justify-center items-center'>

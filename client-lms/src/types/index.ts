@@ -53,3 +53,9 @@ export type DataContent = {
     contentVideo: string;
     contentText: string;
 }
+
+
+// type Response service 
+export type ResponseService<T> =
+    { success: true, data: T }
+    | { success: false, message: string }

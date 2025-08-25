@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query'
 import { AuthService } from '../../service/auth.service'
 
 type Props = {
-    data: SignUpRequestType;
+    data?: SignUpRequestType;
 }
 
 const Pricing: FC<Props> = ({ data }) => {
