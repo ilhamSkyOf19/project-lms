@@ -50,7 +50,7 @@ export class LoginService {
                 } as { id: string }
             },
             process.env.SECRET_KEY_JWT || "",
-            { expiresIn: '1d' }
+            { expiresIn: '1h' }
         )
 
 

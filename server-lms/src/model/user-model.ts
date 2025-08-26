@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export type UserRequestType = {
     name: string,
     photo: string,
@@ -19,3 +21,12 @@ export const toUserResponse = (user: UserResponseType): UserResponseType => ({
     email: user.email,
     role: user.role
 })
+
+export type AuthRequest = Request & {
+    data: {
+        id: string,
+        name: string,
+        email: string,
+        role: 'manager' | 'student'
+    }
+}

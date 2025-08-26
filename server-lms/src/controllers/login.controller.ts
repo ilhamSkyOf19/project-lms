@@ -26,9 +26,9 @@ export class LoginController {
 
             res.cookie("token", login.data.token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
+                secure: false,
                 sameSite: "strict",
-                maxAge: 24 * 60 * 60 * 1000
+                maxAge: 60 * 60 * 1000
             })
 
 

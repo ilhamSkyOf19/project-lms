@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 // load env
 import dotenv from "dotenv";
 dotenv.config()
@@ -9,6 +9,18 @@ import { connectDB } from "./db/db";
 import authRoutes from "./routes/auth.route";
 import paymentRoutes from "./routes/payment.route";
 import cookieParser from 'cookie-parser';
+import { tokenMiddelware } from "./middlewares/tokenMiddleware";
+import coursRoutes from "./routes/course.route";
+
+
+type AuthRequest = Request & {
+    data?: {
+        id: string,
+        name: string,
+        email: string,
+        role: 'manager' | 'student'
+    }
+}
 
 
 const app: express.Application = express();
@@ -27,12 +39,26 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.get("/", (req: express.Request, res: express.Response) => res.send("Hello World!"));
+app.get("/", tokenMiddelware, (req: AuthRequest, res: Response) => {
+    const id = req.data;
+    return res.status(200).json({ message: "Hello World", id });
+});
 
 
 app.use("/api", authRoutes);
 app.use("/api", paymentRoutes);
+app.use("/api", coursRoutes);
 
+
+app.post("/logout", (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+    });
+
+    return res.status(200).json({ message: "Logged out successfully" });
+});
 
 
 app.listen(PORT, () => {
