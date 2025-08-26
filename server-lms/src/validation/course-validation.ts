@@ -9,4 +9,7 @@ export class CourseValidation {
         tagline: z.string(),
         description: z.string()
     }).strict() satisfies ZodType<CourseRequest>
+
+    // update 
+    static readonly UPDATE = this.CREATE.partial() as ZodType<CourseRequest>
 }

@@ -1,4 +1,23 @@
-import mongoose from "mongoose"
+import mongoose, { Document } from "mongoose"
+
+interface ICourse extends Document {
+    name: string,
+    thumbnail: string,
+    category: {
+        type: string,
+        ref: "Category",
+        required: true
+    },
+    tagline: string,
+    description: string,
+    student: string[],
+    manager: {
+        type: string,
+        ref: "User",
+        required: true
+    },
+    details: string[],
+}
 
 export class CourseSchemas {
     // Category Schema
@@ -17,7 +36,7 @@ export class CourseSchemas {
     })
 
     // Course Schema
-    static CourseSchema = new mongoose.Schema({
+    static CourseSchema = new mongoose.Schema<ICourse>({
         name: {
             type: String,
             required: true
@@ -39,13 +58,15 @@ export class CourseSchemas {
             type: String,
             required: true
         },
-        student: {
+        student: [{
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
+            ref: "User",
+            required: true
+        }],
         manager: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: true
         },
         details: [{
             type: mongoose.Schema.Types.ObjectId,

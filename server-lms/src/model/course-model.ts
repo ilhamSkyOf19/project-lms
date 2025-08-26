@@ -1,5 +1,4 @@
 
-import { UserResponseType } from "./user-model";
 
 export type CourseRequest = {
     name: string;
@@ -8,55 +7,44 @@ export type CourseRequest = {
     tagline: string;
 }
 
-
-export type CourseType = {
-    id: string;
-    name: string;
+export type UpdateRequest = CourseRequest & {
     thumbnail: string;
-    category: CategoryType;
-    tagline: string;
-    description: string;
-    student: UserResponseType;
-    manager: UserResponseType;
-    details: CourseDetailType;
-};
+    manager: string
+}
 
 
-export type CategoryType = {
-    id: string;
-    course: CourseType[];
-};
 
-export type CourseDetailType = {
-    id: string;
-    title: string;
-    type: "video" | "text";
-    videoId: string;
-    text: string;
-    course: CourseType[]; // optional, karena bisa populate
-};
+
+
 
 export type CourseResponse = {
     _id: string;
     name: string;
     thumbnail: string;
-    category: [
-        {
-            name: string
-        }
-    ],
-    student: [
-        {
-            name: string
-        }
-    ]
+    category: {
+        name: string
+    },
+    student:
+    {
+        name: string
+    }[],
+
+}
+
+export type CourseWithTotalStudent = CourseResponse & {
+    total_student: number;
+    thumbnail_url: string
 }
 
 
-export const toResponseCourse = (course: CourseResponse): CourseResponse => ({
+export const toResponseCourse = (course: CourseWithTotalStudent): CourseWithTotalStudent => ({
     _id: course._id,
     name: course.name,
     thumbnail: course.thumbnail,
     category: course.category,
-    student: course.student
+    student: course.student,
+    total_student: course.total_student,
+    thumbnail_url: course.thumbnail_url
 })
+
+

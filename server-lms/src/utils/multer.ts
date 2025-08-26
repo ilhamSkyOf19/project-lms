@@ -1,11 +1,19 @@
 import multer, { FileFilterCallback } from "multer";
 import { Request } from "express";
+import path from "path";
+import fs from 'fs';
 
 // file destination 
 const storage = multer.diskStorage({
     // destination
     destination: (_req, _file, cb) => {
-        cb(null, 'public/uploads/course')
+        const dir = path.join(__dirname, '../../public/uploads/course');
+
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        cb(null, dir);
     },
     // filename     
     filename: (_, file, cb) => {
@@ -25,10 +33,10 @@ const storage = multer.diskStorage({
 // file filter 
 const fileFilter = (_: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
     // mime type
-    const allowMediiaType = ['image/png', 'image/jpeg', 'image/jpg'];
+    const allowMediaType = ['image/png', 'image/jpeg', 'image/jpg'];
 
     // cek 
-    if (allowMediiaType.includes(file.mimetype)) {
+    if (allowMediaType.includes(file.mimetype)) {
         cb(null, true);
     } else {
         cb(null, false);

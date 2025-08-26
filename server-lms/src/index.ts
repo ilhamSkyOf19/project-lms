@@ -11,6 +11,7 @@ import paymentRoutes from "./routes/payment.route";
 import cookieParser from 'cookie-parser';
 import { tokenMiddelware } from "./middlewares/tokenMiddleware";
 import coursRoutes from "./routes/course.route";
+import path from "path";
 
 
 type AuthRequest = Request & {
@@ -45,12 +46,18 @@ app.get("/", tokenMiddelware, (req: AuthRequest, res: Response) => {
 });
 
 
+app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
+
+
+
 app.use("/api", authRoutes);
 app.use("/api", paymentRoutes);
 app.use("/api", coursRoutes);
 
 
-app.post("/logout", (req, res) => {
+
+// logout
+app.post("/api/logout", (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

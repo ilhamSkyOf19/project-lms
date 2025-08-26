@@ -1,4 +1,4 @@
-import { UserRequestType } from "../model/user-model";
+import { UserRequestType, UserResponseType } from "../model/user-model";
 import UserSchema from "../schema/userSchema";
 import { TransactionService } from "./transaction.service";
 
@@ -6,6 +6,13 @@ type MidtransResponse = {
     redirect_url: string
 }
 
+
+type UserType = {
+    name: string;
+    photo: string;
+    email: string;
+    role: 'manager' | 'student';
+}
 export class UserService {
     // create 
     static async create(req: UserRequestType): Promise<MidtransResponse> {
@@ -23,5 +30,19 @@ export class UserService {
         await user.save();
         return midtrans;
 
+    }
+
+
+    // find & upadte 
+    static async update(id: string, course: string): Promise<UserResponseType | null> {
+        const response = await UserSchema.findByIdAndUpdate(id, {
+            $push: {
+                course: course
+            }
+        }, {
+            new: true
+        }).lean<UserResponseType>();
+
+        return response;
     }
 }
