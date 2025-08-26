@@ -1,6 +1,12 @@
 
-import { Document, Types } from "mongoose";
 import { UserResponseType } from "./user-model";
+
+export type CourseRequest = {
+    name: string;
+    categoryId: string;
+    description: string;
+    tagline: string;
+}
 
 
 export type CourseType = {

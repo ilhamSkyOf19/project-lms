@@ -11,6 +11,8 @@ export interface IUser extends Document {
     photo: string,
     createdAt: Date;
     updatedAt: Date
+    course: string[]
+    manager: string[]
 }
 
 const UserSchema = new mongoose.Schema<IUser>({
@@ -35,7 +37,17 @@ const UserSchema = new mongoose.Schema<IUser>({
         type: String,
         enum: ['manager', 'student'],
         default: 'manager'
-    }
+    },
+    course: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course'
+        }
+    ],
+    manager: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 }, {
     timestamps: true,
 })
