@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { CourseRequest, CourseResponse, CourseWithTotalStudent } from "../model/course-model";
+import { Response, Request } from "express";
+import { CourseRequest, CourseWithTotalStudent, UpdateCourse } from "../model/course-model";
 import { CourseService } from "../service/course.service";
 import { AuthRequest } from "../model/user-model";
 import { ResponseService } from "../utils/type";
@@ -8,6 +8,7 @@ import { deleteFile } from "../utils/deleteFile";
 import { CourseModel } from "../schema/courseSchema";
 import { CategoryService } from "../service/category.service";
 import { UserService } from "../service/user.service";
+import { FileService } from "../service/file.service";
 
 
 
@@ -144,6 +145,8 @@ export class CourseController {
             if (!category || !oldCourse) return res.status(400).json({ success: false, message: "Data not found" });
 
 
+
+
             await CourseModel.findByIdAndUpdate(courseId, {
                 name: parse.data.name,
                 thumbnail: req.file ? req.file?.filename : oldCourse.thumbnail,
@@ -154,10 +157,46 @@ export class CourseController {
             })
 
 
+            // hapus thumbnail 
+            if (req.file) await FileService.deleteFile("course", oldCourse.thumbnail);
+
+
             return res.status(200).json({
                 success: true,
                 data: {
                     message: "Course updated successfully"
+                }
+            })
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            })
+        }
+    }
+
+
+    // delete course 
+    static async delete(req: Request<{ id: string }>, res: Response<ResponseService<{ message: string }>>) {
+        try {
+
+            // get id
+            const id = req.params.id;
+            // cek course 
+            const course = await CourseModel.findById(id) as UpdateCourse;
+
+            // hapus file 
+            await FileService.deleteFile("course", course.thumbnail);
+
+            // delete file 
+            await CourseModel.findOneAndDelete({ _id: id });
+
+            return res.status(200).json({
+                success: true,
+                data: {
+                    message: "Course deleted successfully"
                 }
             })
 

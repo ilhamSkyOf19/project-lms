@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { LoginRequestType, type LoginResponseType } from '../model/login-model';
+import { LoginRequestType } from '../model/login-model';
 import { LoginService } from '../service/login.service';
 import { ResponseService } from '../utils/type';
 

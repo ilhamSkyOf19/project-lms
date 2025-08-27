@@ -1,23 +1,18 @@
-import mongoose, { Document } from "mongoose"
+import mongoose, { Document, Types } from "mongoose"
+import userSchema from "./userSchema"
 
-interface ICourse extends Document {
-    name: string,
-    thumbnail: string,
-    category: {
-        type: string,
-        ref: "Category",
-        required: true
-    },
-    tagline: string,
-    description: string,
-    student: string[],
-    manager: {
-        type: string,
-        ref: "User",
-        required: true
-    },
-    details: string[],
+
+export interface ICourse extends Document {
+    name: string;
+    thumbnail: string;
+    category: Types.ObjectId;   // ref: Category
+    tagline: string;
+    description: string;
+    student: Types.ObjectId[];  // ref: User[]
+    manager: Types.ObjectId;    // ref: User
+    details: Types.ObjectId[];  // ref: CourseDetail[]
 }
+
 
 export class CourseSchemas {
     // Category Schema
@@ -104,6 +99,33 @@ export class CourseSchemas {
     })
 }
 
+
+
+
+// middleware update delete 
+CourseSchemas.CourseSchema.post("findOneAndDelete", async (doc: ICourse) => {
+    if (doc) {
+        // hapus course di category
+        await CategoryModel.findByIdAndUpdate(doc.category, {
+            $pull: { courses: doc.id }
+        });
+        console.log("doc._id", doc._id);
+        console.log("doc.category", doc.category, typeof doc.category);
+
+
+        // delete detail model 
+        await CourseDetailModel.deleteMany({ course: doc.id });
+
+        // hapus relasi student
+        for (const std of doc.student) {
+            await userSchema.findByIdAndUpdate(std, {
+                $pull: { course: doc._id }
+            })
+        }
+    }
+})
+
+
 // Category Model
 export const CategoryModel = mongoose.model("Category", CourseSchemas.CategorySchema)
 
@@ -112,3 +134,4 @@ export const CourseModel = mongoose.model("Course", CourseSchemas.CourseSchema)
 
 // Course Detail Model
 export const CourseDetailModel = mongoose.model("CourseDetail", CourseSchemas.CourseDetailSchema)
+

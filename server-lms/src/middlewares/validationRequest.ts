@@ -1,9 +1,9 @@
 // validation-request.ts
 import { Request, Response, NextFunction } from "express";
-import { ZodError, ZodSchema } from "zod";
+import { ZodError, ZodType } from "zod";
 
 export const validationRequest =
-    (schema: ZodSchema) =>
+    (schema: ZodType) =>
         (req: Request, res: Response, next: NextFunction) => {
             try {
                 schema.parse(req.body);

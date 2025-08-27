@@ -12,4 +12,10 @@ export class CourseValidation {
 
     // update 
     static readonly UPDATE = this.CREATE.partial() as ZodType<CourseRequest>
+
+
+    // delete 
+    static readonly DELETE = z.object({
+        id: z.string()
+    }).strict() satisfies ZodType<{ id: string }>
 }

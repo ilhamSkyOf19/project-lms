@@ -18,7 +18,7 @@ export class CategoryService {
 
     // category update 
     static async update(id: string, course: string): Promise<CategoryType | null> {
-        const response = await CategoryModel.findByIdAndUpdate(id, { $push: { course } }, { new: true }).lean<CategoryType>();
+        const response = await CategoryModel.findByIdAndUpdate(id, { $push: { courses: course } }, { new: true }).lean<CategoryType>();
         return response
     }
 }

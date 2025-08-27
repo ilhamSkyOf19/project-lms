@@ -7,9 +7,26 @@ export type CourseRequest = {
     tagline: string;
 }
 
+
+export type UpdateCourseRequest = {
+    name?: string;
+    categoryId?: string;
+    description?: string;
+    tagline?: string;
+}
+
 export type UpdateRequest = CourseRequest & {
     thumbnail: string;
     manager: string
+}
+
+
+export type UpdateCourse = {
+    name: string;
+    thumbnail: string;
+    category: string;
+    tagline: string;
+    description: string
 }
 
 

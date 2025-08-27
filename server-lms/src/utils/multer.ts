@@ -32,16 +32,15 @@ const storage = multer.diskStorage({
 
 // file filter 
 const fileFilter = (_: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
-    // mime type
     const allowMediaType = ['image/png', 'image/jpeg', 'image/jpg'];
 
-    // cek 
     if (allowMediaType.includes(file.mimetype)) {
         cb(null, true);
     } else {
-        cb(null, false);
+        cb(new Error('Invalid file type'));
     }
 }
+
 
 
 // middleware upload 

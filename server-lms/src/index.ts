@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 // load env
 import dotenv from "dotenv";
 dotenv.config()
@@ -12,6 +12,8 @@ import cookieParser from 'cookie-parser';
 import { tokenMiddelware } from "./middlewares/tokenMiddleware";
 import coursRoutes from "./routes/course.route";
 import path from "path";
+import multer from "multer";
+import { errorMulter } from "./middlewares/errorMulter";
 
 
 type AuthRequest = Request & {
@@ -50,9 +52,14 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 
 
 
+
+
+
+
 app.use("/api", authRoutes);
 app.use("/api", paymentRoutes);
 app.use("/api", coursRoutes);
+
 
 
 
@@ -67,6 +74,8 @@ app.post("/api/logout", (req, res) => {
     return res.status(200).json({ message: "Logged out successfully" });
 });
 
+// error multer 
+app.use(errorMulter)
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
