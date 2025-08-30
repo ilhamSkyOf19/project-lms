@@ -43,6 +43,8 @@ type Params = {
 
 interface TokenData {
     id: string;
+    name: string;
+    email: string;
     role: string;
 }
 
