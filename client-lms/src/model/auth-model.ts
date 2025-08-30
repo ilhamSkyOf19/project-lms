@@ -1,3 +1,12 @@
+// user model 
+export type UserModel = {
+    id: string;
+    name: string;
+    email: string;
+    role: 'manager' | 'student';
+}
+
+
 export type SignUpRequestType = {
     name: string;
     photo?: string;

@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import AXIOS from "../lib/axios";
-import type { SignUpRequestType, SignUpResponseType } from "../model/auth-model";
+import type { SignUpRequestType, SignUpResponseType, UserModel } from "../model/auth-model";
 import type { SignInRequestType, SignInResponse } from "../model/login-model";
 import type { ResponseService } from "../types";
 
@@ -22,6 +22,35 @@ export class AuthService {
             })
 
             return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                return error.response?.data
+            }
+            console.log(error)
+            return {
+                success: false,
+                message: 'something went wrong'
+            }
+        }
+    }
+
+    // get auth user 
+    static async getAuthUser(): Promise<ResponseService<UserModel>> {
+        try {
+            // get auth user
+            const response = await AXIOS.get('/auth', {
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            // cek
+            if (response.data.success) {
+                return response.data;
+            } else {
+                return {
+                    success: false,
+                    message: 'user not found'
+                }
+            }
         } catch (error) {
             if (error instanceof AxiosError) {
                 return error.response?.data

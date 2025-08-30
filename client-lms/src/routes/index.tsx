@@ -15,6 +15,7 @@ import ManagerStudents from "../Pages/managers/student/ManagerStudents";
 import AddStudent from "../Pages/managers/student/AddStudent";
 import Preview from "../Pages/Preview";
 import Student from "../Pages/Student";
+import loaderAuth from "../contexts/loadersAuth";
 
 const route = createBrowserRouter([
     {
@@ -43,6 +44,7 @@ const route = createBrowserRouter([
     },
     {
         path: "/manager",
+        loader: () => loaderAuth('manager'),
         element: <LayoutDashboard role="manager" />,
         children: [
             {
