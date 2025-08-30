@@ -190,7 +190,7 @@ export class CourseController {
             // hapus file 
             await FileService.deleteFile("course", course.thumbnail);
 
-            // delete file 
+            // delete doc 
             await CourseModel.findOneAndDelete({ _id: id });
 
             return res.status(200).json({

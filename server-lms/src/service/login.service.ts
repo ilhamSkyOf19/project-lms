@@ -35,7 +35,7 @@ export class LoginService {
             status: 'success'
         });
 
-        if (findUser.role !== 'student' && !isValidUser) {
+        if (findUser.role !== 'manager' && !isValidUser) {
             return {
                 success: false,
                 message: "User not verified"
