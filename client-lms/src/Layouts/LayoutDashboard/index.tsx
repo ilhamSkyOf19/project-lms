@@ -1,14 +1,18 @@
 import { type FC } from 'react'
 import SideBar from '../../components/SideBar';
-import { Outlet, useMatch } from 'react-router';
+import { Outlet, useLoaderData, useMatch } from 'react-router';
 import HeaderDashboard from '../../components/HeaderDashboard';
 import SideBarPreview from '../../components/SideBarPreview';
 import clsx from 'clsx';
+import type { UserModel } from '../../model/auth-model';
 
 type Props = {
     role: 'manager' | 'student'
 }
 const LayoutDashboard: FC<Props> = ({ role }) => {
+
+    // get user
+    const user = useLoaderData() as UserModel;
 
     // use match 
     const preview = useMatch('/manager/course/manage-course-materi/:id/preview/:idContent') || useMatch('/student/course/:id/preview/:idContent');
@@ -32,7 +36,7 @@ const LayoutDashboard: FC<Props> = ({ role }) => {
             {/* children */}
             <div className='w-full h-[100vh] px-7 overflow-y-scroll py-8'>
                 {/* header */}
-                <HeaderDashboard />
+                <HeaderDashboard user={user} />
                 {/* content */}
                 <Outlet />
             </div>

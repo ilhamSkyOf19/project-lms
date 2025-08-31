@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState, type FC, type RefObject } from 'react'
 import BoxSearch from '../BoxSearch'
 import ModalProfile from '../ModalProfile';
+import type { UserModel } from '../../model/auth-model';
 
-const HeaderDashboard: FC = () => {
+
+type Props = {
+    user: UserModel;
+}
+const HeaderDashboard: FC<Props> = ({ user: { name, role } }) => {
     // state modal
     const [modal, setModal] = useState<boolean>(false);
 
@@ -45,10 +50,10 @@ const HeaderDashboard: FC = () => {
                 {/* name and role */}
                 <div className='flex flex-col justify-center items-end'>
                     {/* name */}
-                    <h4 className='text-lg font-semibold capitalize'>Ilham Rohmatulloh</h4>
+                    <h4 className='text-lg font-semibold capitalize'>{name}</h4>
                     {/* role */}
                     <p className='text-sm text-slate-400 capitalize'>
-                        Manager
+                        {role}
                     </p>
                 </div>
                 {/* avatar */}

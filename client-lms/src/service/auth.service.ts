@@ -6,12 +6,28 @@ import type { ResponseService } from "../types";
 
 export class AuthService {
     // sign up 
-    static async signUp(data: SignUpRequestType): Promise<SignUpResponseType> {
-        return AXIOS.post('/sign-up', data, {
-            headers: { 'Content-Type': 'application/json' }
-        })
-            .then(res => res.data)
-            .then(data => data.data);
+    static async signUp(data: SignUpRequestType): Promise<ResponseService<SignUpResponseType>> {
+        try {
+            const response = await AXIOS.post('/sign-up', data, {
+                headers: { 'Content-Type': 'application/json' }
+            }).then(res => res.data)
+
+            return {
+                success: true,
+                data: response.data
+            }
+
+
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                return error.response?.data
+            }
+            console.log(error)
+            return {
+                success: false,
+                message: 'something went wrong'
+            }
+        }
     }
 
     // sign in 
@@ -19,9 +35,12 @@ export class AuthService {
         try {
             const response = await AXIOS.post('/sign-in', data, {
                 headers: { 'Content-Type': 'application/json' }
-            })
+            }).then(res => res.data)
 
-            return response.data;
+            return {
+                success: true,
+                data: response.data
+            }
         } catch (error) {
             if (error instanceof AxiosError) {
                 return error.response?.data
@@ -43,13 +62,9 @@ export class AuthService {
             })
 
             // cek
-            if (response.data.success) {
-                return response.data;
-            } else {
-                return {
-                    success: false,
-                    message: 'user not found'
-                }
+            return {
+                success: true,
+                data: response.data
             }
         } catch (error) {
             if (error instanceof AxiosError) {

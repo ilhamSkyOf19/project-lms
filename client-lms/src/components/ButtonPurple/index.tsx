@@ -6,11 +6,12 @@ type Props = {
     width?: string
     type?: 'button' | 'submit'
     name?: string
+    disabled?: boolean
 }
 
-const ButtonPurple: FC<Props> = ({ name, width, label, type }) => {
+const ButtonPurple: FC<Props> = ({ name, width, label, type, disabled }) => {
     return (
-        <button name={name} type={type ? type : 'button'} className={clsx(
+        <button disabled={disabled} name={name} type={type ? type : 'button'} className={clsx(
             'py-3.5 rounded-full text-white font-semibold bg-primary-purple capitalize flex flex-row justify-center items-center text-sm border border-primary-purple hover:scale-105 transition-all duration-300',
             width ? `w-${width}` : 'px-6'
         )}>

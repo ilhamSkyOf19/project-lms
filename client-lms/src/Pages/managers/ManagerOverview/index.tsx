@@ -4,14 +4,8 @@ import ButtonLinkBorder from '../../../components/ButtonLinkBorder'
 import ContentData from './ContentData'
 import ContentLatest from './ContentLatest'
 import HeaderContentDashboard from '../../../components/HeaderContentDahsboard'
-import { useLoaderData } from 'react-router'
-import type { UserModel } from '../../../model/auth-model'
 
 const ManagerOverview: FC = () => {
-
-    const user = useLoaderData() as UserModel;
-
-    console.log(user);
 
     // data chart 
     const dataChart = [

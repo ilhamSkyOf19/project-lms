@@ -7,8 +7,9 @@ export class CourseService {
     // get 
     static async getAll(): Promise<ResponseService<CourseWithTotalStudent[]>> {
         try {
-            return AXIOS.get('/course')
-                .then(res => res.data)
+            const res = await AXIOS.get('/course');
+
+            return res.data
         } catch (error) {
             console.log(error)
             if (error instanceof AxiosError) {
@@ -21,4 +22,31 @@ export class CourseService {
             }
         }
     }
+
+    // create 
+    static async create(data: FormData): Promise<ResponseService<{ message: string }>> {
+        try {
+            const res = await AXIOS.post('/course', data, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+
+            return res.data; // langsung return data
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                console.log(error.response?.data);
+                return {
+                    success: false,
+                    message: error.response?.data?.message || 'bad request'
+                };
+            }
+
+            return {
+                success: false,
+                message: 'something went wrong'
+            };
+        }
+    }
+
 }

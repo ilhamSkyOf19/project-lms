@@ -1,3 +1,4 @@
+import { redirect } from "react-router";
 import { AuthService } from "../service/auth.service";
 
 const loaderAuth = async (role: 'manager' | 'student') => {
@@ -5,17 +6,21 @@ const loaderAuth = async (role: 'manager' | 'student') => {
         // get response 
         const response = await AuthService.getAuthUser();
 
+
         if (!response.success) {
-            window.location.replace('/manager/sign-in')
-        } else {
-            if (response.data.role !== role) {
-                window.location.replace('/manager/sign-in')
-            }
+            return redirect('/manager/sign-in');
         }
 
-        if (response.success) {
-            return response.data
+        if (!response.data) {
+            return redirect('/manager/sign-in');
         }
+
+        if (response.data.role !== role) {
+            return redirect('/manager/sign-in');
+        }
+
+
+        return response.data;
     } catch (error) {
         console.log(error)
         return {

@@ -1,6 +1,9 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState, type FC } from 'react'
 import type { CategoryResponse } from '../../model/category-model';
+import type { FieldError, UseFormRegisterReturn, UseFormSetValue } from 'react-hook-form';
+import ErrorMessage from '../ErrorMessage';
+import type { CourseRequest } from '../../model/course-model';
 
 
 type Props = {
@@ -8,17 +11,22 @@ type Props = {
     icon: string;
     label: string;
     value: string;
-    handleOnChange: (option: string) => void
+    handleOnChange: (option: CategoryResponse) => void
     chooses: CategoryResponse[]
-    placeholder: string
+    placeholder: string;
+    register: UseFormRegisterReturn;
+    error?: FieldError;
+    setValue: UseFormSetValue<CourseRequest>;
 }
-const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOnChange, placeholder }) => {
+const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOnChange, placeholder, register, error, setValue }) => {
     // state option
     const [optionActive, setOptionActive] = useState<boolean>(false);
     // ref option & ref input & ref button arrow down
     const inputRef = useRef<HTMLInputElement>(null);
     const optionRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
+
+
 
     // handle outside click option
     useEffect(() => {
@@ -36,11 +44,15 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
         }
     }, [optionRef])
 
+
+    // cek value
     useEffect(() => {
         console.log(value)
     }, [value])
+
+
     return (
-        <div className='w-full flex flex-col justify-start items-start gap-2.5 '>
+        <div className='w-full flex flex-col justify-start items-start gap-1'>
             {/* label */}
             <label htmlFor={name} className='font-semibold text-black text-md capitalize'>
                 {label}
@@ -55,11 +67,13 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
 
                 {/* input */}
                 <input
+                    {...register}
                     ref={inputRef}
                     type='text'
                     name={name}
                     id={name}
-                    value={value === '' ? placeholder : value}
+                    placeholder={placeholder}
+                    value={value}
                     readOnly
                     className='appearance-none outline-none bg-transparent w-full font-semibold text-black placeholder:font-normal placeholder:text-[#6B6C7F] h-full relative cursor-pointer capitalize'
                     onClick={() => setOptionActive(!optionActive)}
@@ -72,7 +86,10 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
                             <div className='w-[100%] flex flex-col justify-start items-start'>
                                 {
                                     chooses.map((item, i) => (
-                                        <Option key={i} option={item.name} handleClick={handleOnChange} />
+                                        <Option key={i} option={item.name} handleClick={() => {
+                                            handleOnChange(item),
+                                                setValue('categoryId', item._id ?? "", { shouldValidate: true })
+                                        }} />
                                     ))
                                 }
                             </div>
@@ -84,6 +101,10 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
                 <button ref={buttonRef} type='button' className='w-6.5 h-full flex flex-col justify-center items-center' onClick={() => setOptionActive(!optionActive)}>
                     <img src="/assets/images/icons/arrow-down.svg" alt="arrow" className="w-full" />
                 </button>
+            </div>
+            {/* error message */}
+            <div className='min-h-7'>
+                <ErrorMessage error={error?.message} />
             </div>
         </div>
     )

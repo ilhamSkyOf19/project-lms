@@ -33,10 +33,15 @@ const FormSignIn: FC = () => {
 
         // response 
         const response = await mutateAsync(data);
+
         if (!response.success) {
             setError(("email"), { type: 'manual', message: response.message });
             setError(("password"), { type: 'manual', message: response.message });
         } else {
+            console.log('response', response.data);
+
+            console.log('role', response.data.role);
+
             if (response.data.role === 'manager') {
                 navigate('/manager')
             } else {

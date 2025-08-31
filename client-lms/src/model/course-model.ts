@@ -5,6 +5,7 @@ export type CourseRequest = {
     categoryId: string;
     description: string;
     tagline: string;
+    thumbnail: File;
 }
 
 
