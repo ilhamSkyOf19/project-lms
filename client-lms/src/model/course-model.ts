@@ -30,10 +30,6 @@ export type UpdateCourse = {
 }
 
 
-
-
-
-
 export type CourseResponse = {
     _id: string;
     name: string;

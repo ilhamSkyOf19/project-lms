@@ -1,20 +1,39 @@
-import { useState, type FC } from 'react'
+import { useEffect, useState, type FC } from 'react'
 import HeaderContentDashboard from '../../../../components/HeaderContentDahsboard'
 import ButtonBorder from '../../../../components/ButtonBorder'
 import ButtonLinkPurple from '../../../../components/ButtonLinkPurple'
-import course from '../../../../jsons/course.json'
 import CardManageCourse from '../../../../components/CardManageCourse'
-import type { DataCourse } from '../../../../types'
 import PaginationNumber from '../../../../components/PaginationNumber'
+import { CourseService } from '../../../../service/course.service'
+import type { CourseWithTotalStudent } from '../../../../model/course-model'
 
 const ManagerCourse: FC = () => {
+    // data course 
+    const [dataCourse, setDataCourse] = useState<CourseWithTotalStudent[]>([])
+
+
     // state pagination active
     const [paginationActive, setPaginationActive] = useState<number>(1)
+
+
+    // get data 
+    useEffect(() => {
+        const fetch = async () => {
+            const response = await CourseService.getAll()
+            if (response.success) {
+                setDataCourse(response.data)
+            } else {
+                console.log(response.message)
+            }
+        }
+        fetch()
+    }, [])
 
     // handle pagination
     const handlePagination = (number: number) => {
         setPaginationActive(number)
     }
+
 
 
     return (
@@ -30,9 +49,13 @@ const ManagerCourse: FC = () => {
             {/* content course */}
             <div className='bg-[#F8FAFB] w-full flex flex-col justify-start items-center p-8 rounded-3xl overflow-x-hidden gap-12'>
                 {
-                    course.map((course, index) => (
-                        <CardManageCourse key={index} data={course as DataCourse} />
-                    ))
+                    dataCourse && dataCourse.length > 0 ? (
+                        dataCourse.map((item, i) => (
+                            <CardManageCourse key={i} data={item} />
+                        ))
+                    ) : (
+                        <p>no data</p>
+                    )
                 }
 
                 {/* pagination */}
