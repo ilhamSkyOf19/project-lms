@@ -14,6 +14,7 @@ import coursRoutes from "./routes/course.route";
 import path from "path";
 import multer from "multer";
 import { errorMulter } from "./middlewares/errorMulter";
+import categoryRoutes from "./routes/category.routes";
 
 
 type AuthRequest = Request & {
@@ -59,6 +60,7 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 app.use("/api", authRoutes);
 app.use("/api", paymentRoutes);
 app.use("/api", coursRoutes);
+app.use("/api", categoryRoutes);
 
 
 

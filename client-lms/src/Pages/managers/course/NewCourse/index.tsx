@@ -6,12 +6,32 @@ import BoxInputChoose from '../../../../components/BoxInputChoose'
 import ButtonPurple from '../../../../components/ButtonPurple'
 import ButtonTrash from '../../../../components/ButtonTrash'
 import clsx from 'clsx'
+import type { CategoryResponse } from '../../../../model/category-model'
+import { CategoryService } from '../../../../service/category.service'
 
 const NewCourse: FC = () => {
     // state input
     const [inputImg, setInputImg] = useState<string>('');
     const [category, setCategory] = useState<string>('');
     const [thumbnailEmpty, setThumbnailEmpty] = useState<boolean>(false);
+
+    // category
+    const [categoryOption, setCategoryOption] = useState<CategoryResponse[]>([]);
+
+
+    // get category 
+    useEffect(() => {
+        const fetch = async () => {
+            const response = await CategoryService.getAll()
+            if (response.success) {
+                setCategoryOption(response.data)
+            } else {
+                console.log(response.message)
+            }
+        }
+
+        fetch()
+    }, [])
 
 
     // handle category 
@@ -62,7 +82,7 @@ const NewCourse: FC = () => {
                     <BoxInputData type='text' name='tagline' icon='bill-black.svg' label='course tagline' placeholder='Write tagline for better copy' />
 
                     {/* category */}
-                    <BoxInputChoose name='category' icon='bill-black.svg' label='select category' value={category} chooses={['Programming', 'Design', 'Marketing']} handleOnChange={handleCategory} placeholder='Choose one category' />
+                    <BoxInputChoose name='category' icon='bill-black.svg' label='select category' value={category} chooses={categoryOption} handleOnChange={handleCategory} placeholder='Choose one category' />
 
                     {/* text area */}
                     <BoxInputData type='textarea' name='description' icon='note-black.png' label='description' placeholder='Write better description for your course' />

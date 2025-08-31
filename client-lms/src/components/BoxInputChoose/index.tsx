@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState, type FC } from 'react'
+import type { CategoryResponse } from '../../model/category-model';
 
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
     label: string;
     value: string;
     handleOnChange: (option: string) => void
-    chooses: string[]
+    chooses: CategoryResponse[]
     placeholder: string
 }
 const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOnChange, placeholder }) => {
@@ -71,7 +72,7 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
                             <div className='w-[100%] flex flex-col justify-start items-start'>
                                 {
                                     chooses.map((item, i) => (
-                                        <Option key={i} option={item} handleClick={handleOnChange} />
+                                        <Option key={i} option={item.name} handleClick={handleOnChange} />
                                     ))
                                 }
                             </div>
