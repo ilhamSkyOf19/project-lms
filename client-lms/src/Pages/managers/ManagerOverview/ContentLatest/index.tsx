@@ -1,18 +1,23 @@
 import { type FC } from 'react'
 import CardLatestStudent from '../../../../components/CardLatestStudent'
 import students from '../../../../jsons/students.json'
-import course from '../../../../jsons/course.json'
-import type { DataStudent, DataCourse } from '../../../../types'
+import type { DataStudent } from '../../../../types'
 import CardLatestCourse from '../../../../components/CardLatestCourse'
+import type { CourseDetailResponse } from '../../../../model/course-model'
 
-const ContentLatest: FC = () => {
+
+type Props = {
+    dataCourse: CourseDetailResponse[];
+}
+const ContentLatest: FC<Props> = ({ dataCourse }) => {
     return (
         <div className='w-full rounded-3xl flex flex-row justify-between items-start gap-11'>
             {/* latest course */}
+            <ContentLatestComponent type='course' data={dataCourse} />
 
-            <ContentLatestComponent type='course' />
+
             {/* latest students */}
-            <ContentLatestComponent type='student' />
+            <ContentLatestComponent type='student' data={dataCourse} />
 
         </div>
     )
@@ -20,10 +25,11 @@ const ContentLatest: FC = () => {
 
 type PropsContentLatestComponent = {
     type: 'course' | 'student'
+    data: CourseDetailResponse[];
 }
 
 // content latest 
-const ContentLatestComponent: FC<PropsContentLatestComponent> = ({ type }) => {
+const ContentLatestComponent: FC<PropsContentLatestComponent> = ({ type, data }) => {
     return (
         <div className='flex-1 p-8 bg-primary-white rounded-3xl min-h-[40rem]'>
             {/* title */}
@@ -37,8 +43,8 @@ const ContentLatestComponent: FC<PropsContentLatestComponent> = ({ type }) => {
             <div className='w-full flex flex-col justify-start items-start gap-7'>
                 {
                     type === 'course' ? (
-                        course.map((course, index) => (
-                            <CardLatestCourse key={index} data={course as DataCourse} />
+                        data.map((course, index) => (
+                            <CardLatestCourse key={index} data={course} />
                         ))
                     ) : (
                         students.map((student, index) => (

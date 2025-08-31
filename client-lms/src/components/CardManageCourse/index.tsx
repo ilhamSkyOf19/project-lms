@@ -2,11 +2,15 @@ import { type FC } from 'react'
 import ButtonLinkBorder from '../ButtonLinkBorder';
 import IconDescComponent from '../IconDescComponent';
 import type { CourseWithTotalStudent } from '../../model/course-model';
+import ButtonDelete from '../ButtonnDelete';
 
 type Props = {
     data: CourseWithTotalStudent;
+    handleDelete: () => void
 }
-const CardManageCourse: FC<Props> = ({ data: { name, thumbnail_url, category, total_student, _id } }) => {
+const CardManageCourse: FC<Props> = ({ data: { name, thumbnail_url, category, total_student, _id }, handleDelete }) => {
+    // handle button delete 
+
     return (
         <div className='w-full flex flex-row justify-between items-center'>
             {/* course */}
@@ -29,7 +33,12 @@ const CardManageCourse: FC<Props> = ({ data: { name, thumbnail_url, category, to
                 </div>
             </div>
             {/* button */}
-            <ButtonLinkBorder link={`/manager/course/manage-course-materi/${_id}`} label='manage' />
+            <div className='flex flex-row justify-end items-center gap-3'>
+                {/* button delete */}
+                <ButtonDelete label='delete' handleButton={handleDelete} />
+                {/* button manage */}
+                <ButtonLinkBorder link={`/manager/course/manage-course-materi/${_id}`} label='manage' />
+            </div>
         </div>
     )
 }

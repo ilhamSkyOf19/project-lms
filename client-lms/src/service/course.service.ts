@@ -1,13 +1,13 @@
 import { AxiosError } from "axios";
 import AXIOS from "../lib/axios";
-import type { CourseDetailResponse, CourseWithTotalStudent } from "../model/course-model";
+import type { CourseDetailResponse } from "../model/course-model";
 import type { ResponseService } from "../types";
 
 export class CourseService {
     // get 
-    static async getAll(): Promise<ResponseService<CourseWithTotalStudent[]>> {
+    static async getAll(): Promise<ResponseService<CourseDetailResponse[]>> {
         try {
-            const res = await AXIOS.get('/course');
+            const res = await AXIOS.get('/course').then(res => res.data);
 
             return res.data
         } catch (error) {
@@ -75,6 +75,26 @@ export class CourseService {
             // fetch 
             const response = await AXIOS.put(`/course/${id}`, data).then(res => res.data);
 
+
+            return response
+        } catch (error) {
+            console.log(error)
+            if (error instanceof AxiosError) {
+                return error.response?.data
+            }
+
+            return {
+                success: false,
+                message: 'something went wrong'
+            }
+        }
+    }
+
+    // delete 
+    static async delete(id: string): Promise<ResponseService<{ message: string }>> {
+        try {
+            // response 
+            const response = await AXIOS.delete(`/course/${id}`).then(res => res.data);
 
             return response
         } catch (error) {

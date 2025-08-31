@@ -18,6 +18,7 @@ import Student from "../Pages/Student";
 import loaderAuth from "../contexts/loadersAuth";
 import loaderCourseDetail from "../contexts/loaderCourseDetail";
 import UpdateCourse from "../Pages/managers/course/UpdateCourse";
+import loaderCourseAll from "../contexts/loaderCourseAll";
 
 const route = createBrowserRouter([
     {
@@ -51,10 +52,12 @@ const route = createBrowserRouter([
         children: [
             {
                 index: true,
+                loader: () => loaderCourseAll(),
                 element: <ManagerOverview />,
             },
             {
                 path: "/manager/course",
+                loader: () => loaderCourseAll(),
                 element: <ManagerCourse />,
 
             },

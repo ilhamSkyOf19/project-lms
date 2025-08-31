@@ -1,38 +1,39 @@
-import { useEffect, useState, type FC } from 'react'
+import { useState, type FC } from 'react'
 import HeaderContentDashboard from '../../../../components/HeaderContentDahsboard'
 import ButtonBorder from '../../../../components/ButtonBorder'
 import ButtonLinkPurple from '../../../../components/ButtonLinkPurple'
 import CardManageCourse from '../../../../components/CardManageCourse'
 import PaginationNumber from '../../../../components/PaginationNumber'
 import { CourseService } from '../../../../service/course.service'
-import type { CourseWithTotalStudent } from '../../../../model/course-model'
+import type { CourseDetailResponse } from '../../../../model/course-model'
+import { useLoaderData, useRevalidator } from 'react-router'
 
 const ManagerCourse: FC = () => {
-    // data course 
-    const [dataCourse, setDataCourse] = useState<CourseWithTotalStudent[]>([])
+    // data course use loader
+    const dataCourse = useLoaderData() as CourseDetailResponse[];
 
-
+    // revalidate 
+    const { revalidate } = useRevalidator();
     // state pagination active
     const [paginationActive, setPaginationActive] = useState<number>(1)
 
-
-    // get data 
-    useEffect(() => {
-        const fetch = async () => {
-            const response = await CourseService.getAll()
-            if (response.success) {
-                setDataCourse(response.data)
-            } else {
-                console.log(response.message)
-            }
-        }
-        fetch()
-    }, [])
 
     // handle pagination
     const handlePagination = (number: number) => {
         setPaginationActive(number)
     }
+
+    const handleDelete = async (id: string) => {
+        const fetch = await CourseService.delete(id);
+
+        if (fetch.success) {
+            console.log(fetch.data.message);
+            revalidate();
+        } else {
+            console.log(fetch.message);
+        }
+
+    };
 
 
 
@@ -51,7 +52,7 @@ const ManagerCourse: FC = () => {
                 {
                     dataCourse && dataCourse.length > 0 ? (
                         dataCourse.map((item, i) => (
-                            <CardManageCourse key={i} data={item} />
+                            <CardManageCourse key={i} data={item} handleDelete={() => handleDelete(item._id)} />
                         ))
                     ) : (
                         <p>no data</p>

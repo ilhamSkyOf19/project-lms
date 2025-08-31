@@ -4,8 +4,13 @@ import ButtonLinkBorder from '../../../components/ButtonLinkBorder'
 import ContentData from './ContentData'
 import ContentLatest from './ContentLatest'
 import HeaderContentDashboard from '../../../components/HeaderContentDahsboard'
+import { useLoaderData } from 'react-router'
+import type { CourseDetailResponse } from '../../../model/course-model'
 
 const ManagerOverview: FC = () => {
+
+    // data course 
+    const dataCourse = useLoaderData() as CourseDetailResponse[];
 
     // data chart 
     const dataChart = [
@@ -34,7 +39,7 @@ const ManagerOverview: FC = () => {
             <ContentData data={dataChart} />
 
             {/* content latest */}
-            <ContentLatest />
+            <ContentLatest dataCourse={dataCourse} />
         </div>
     )
 }
