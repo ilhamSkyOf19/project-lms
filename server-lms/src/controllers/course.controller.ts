@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { CourseRequest, CourseWithTotalStudent, UpdateCourse } from "../model/course-model";
+import { CourseRequest, CourseResponseDetail, CourseWithTotalStudent, UpdateCourse } from "../model/course-model";
 import { CourseService } from "../service/course.service";
 import { AuthRequest } from "../model/user-model";
 import { ResponseService } from "../utils/type";
@@ -36,6 +36,29 @@ export class CourseController {
             });
         }
     }
+
+    // get course detail
+    static async getDetail(req: Request<{ id: string }>, res: Response<ResponseService<CourseResponseDetail>>) {
+        try {
+            // get id 
+            const id = req.params.id;
+
+            // get course 
+            const response = await CourseService.getDetail({ id });
+
+            return res.status(200).json({
+                success: true,
+                data: response
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            });
+        }
+    }
+
 
     // create course 
     static async create(req: AuthRequest, res: Response<ResponseService<{ message: string }>>) {
@@ -121,9 +144,6 @@ export class CourseController {
             // get id 
             const id = req.data?.id;
 
-
-
-
             // cek validation
             if (!parse.success) {
                 // hapus file
@@ -138,23 +158,27 @@ export class CourseController {
             }
 
             // cek category
-            const category = await CategoryService.get(parse.data.categoryId);
+            if (parse.data.categoryId) {
+                const category = await CategoryService.get(parse.data.categoryId);
+                if (!category) return res.status(400).json({ success: false, message: "Data not found" });
+            }
             const oldCourse = await CourseModel.findById(courseId);
 
             // cek category 
-            if (!category || !oldCourse) return res.status(400).json({ success: false, message: "Data not found" });
+            if (!oldCourse) return res.status(400).json({ success: false, message: "Data not found" });
 
 
 
 
             await CourseModel.findByIdAndUpdate(courseId, {
-                name: parse.data.name,
-                thumbnail: req.file ? req.file?.filename : oldCourse.thumbnail,
-                tagline: parse.data.tagline,
-                category: parse.data.categoryId,
-                description: parse.data.description,
+                name: parse.data.name ?? oldCourse.name,
+                thumbnail: req.file?.filename ? req.file?.filename : oldCourse.thumbnail,
+                tagline: parse.data.tagline ?? oldCourse.tagline,
+                category: parse.data.categoryId ?? oldCourse.category,
+                description: parse.data.description ?? oldCourse.description,
                 manager: id
             })
+
 
 
             // hapus thumbnail 

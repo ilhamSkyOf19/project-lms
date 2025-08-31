@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import AXIOS from "../lib/axios";
-import type { CourseWithTotalStudent } from "../model/course-model";
+import type { CourseDetailResponse, CourseWithTotalStudent } from "../model/course-model";
 import type { ResponseService } from "../types";
 
 export class CourseService {
@@ -12,6 +12,25 @@ export class CourseService {
             return res.data
         } catch (error) {
             console.log(error)
+            if (error instanceof AxiosError) {
+                return error.response?.data
+            }
+
+            return {
+                success: false,
+                message: 'something went wrong'
+            }
+        }
+    }
+
+    // get detail
+    static async getDetail(id: string): Promise<ResponseService<CourseDetailResponse>> {
+        try {
+            // fetch
+            const res = await AXIOS.get(`/course/${id}`).then(res => res.data);
+
+            return res.data
+        } catch (error) {
             if (error instanceof AxiosError) {
                 return error.response?.data
             }
@@ -46,6 +65,28 @@ export class CourseService {
                 success: false,
                 message: 'something went wrong'
             };
+        }
+    }
+
+
+    // update 
+    static async update(data: FormData, id: string): Promise<ResponseService<{ message: string }>> {
+        try {
+            // fetch 
+            const response = await AXIOS.put(`/course/${id}`, data).then(res => res.data);
+
+
+            return response
+        } catch (error) {
+            console.log(error)
+            if (error instanceof AxiosError) {
+                return error.response?.data
+            }
+
+            return {
+                success: false,
+                message: 'something went wrong'
+            }
         }
     }
 

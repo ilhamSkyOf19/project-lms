@@ -9,7 +9,7 @@ import clsx from 'clsx'
 import type { CategoryResponse } from '../../../../model/category-model'
 import { CategoryService } from '../../../../service/category.service'
 import { useForm, type FieldError, type UseFormRegisterReturn, type UseFormResetField, type UseFormSetValue } from 'react-hook-form'
-import type { CourseRequest } from '../../../../model/course-model'
+import type { CourseRequest, UpdateCourseRequest } from '../../../../model/course-model'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CourseValidation } from '../../../../validation/course-validation'
 import ErrorMessage from '../../../../components/ErrorMessage'
@@ -18,6 +18,8 @@ import { CourseService } from '../../../../service/course.service'
 import { useNavigate } from 'react-router'
 
 const NewCourse: FC = () => {
+
+
     // state input
     const [category, setCategory] = useState<CategoryResponse | null>(null);
 
@@ -49,13 +51,14 @@ const NewCourse: FC = () => {
         setCategory(option);
     }
 
+
     // use form 
     const { register, handleSubmit, formState: { errors }, setValue, resetField } = useForm<CourseRequest>({
         defaultValues: {
             name: '',
             categoryId: '',
             description: '',
-            tagline: ''
+            tagline: '',
         },
         resolver: zodResolver(CourseValidation.CREATE)
     });
@@ -111,6 +114,7 @@ const NewCourse: FC = () => {
         }
 
 
+
     }
 
 
@@ -139,7 +143,7 @@ const NewCourse: FC = () => {
                     <BoxInputData type='text' name='tagline' icon='bill-black.svg' label='course tagline' placeholder='Write tagline for better copy' register={register("tagline")} error={errors.tagline} />
 
                     {/* category */}
-                    <BoxInputChoose name='categoryId' icon='bill-black.svg' label='select category' value={category?.name || ''} chooses={categoryOption} handleOnChange={handleCategory} placeholder='Choose one category' register={register("categoryId")} error={errors.categoryId} setValue={setValue} />
+                    <BoxInputChoose name='categoryId' icon='bill-black.svg' label='select category' value={category?.name || ''} chooses={categoryOption} handleOnChange={handleCategory} placeholder='Choose one category' register={register("categoryId")} error={errors.categoryId} setValue={setValue as UseFormSetValue<CourseRequest>} />
 
                     {/* text area */}
                     <BoxInputData type='textarea' name='description' icon='note-black.png' label='description' placeholder='Write better description for your course' register={register("description")} error={errors.description} />
@@ -172,6 +176,8 @@ const InputThumbnail: FC<PropsInputThumbnail> = ({ register, error, setValue, re
     // ref input thumbnail
     const refInputThumb = useRef<HTMLInputElement>(null);
 
+
+
     // handle input thumb
     const handleChangeInputImg = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -179,6 +185,7 @@ const InputThumbnail: FC<PropsInputThumbnail> = ({ register, error, setValue, re
             const objectUrl = URL.createObjectURL(file);
             setPreview(objectUrl);
             setValue('thumbnail', file);
+
         }
     }
     // handle click input thumb

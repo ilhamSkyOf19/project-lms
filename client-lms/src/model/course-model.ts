@@ -14,6 +14,7 @@ export type UpdateCourseRequest = {
     categoryId?: string;
     description?: string;
     tagline?: string;
+    thumbnail?: File;
 }
 
 export type UpdateRequest = CourseRequest & {
@@ -42,6 +43,8 @@ export type CourseResponse = {
     {
         name: string
     }[],
+    description: string;
+    tagline: string
 }
 
 export type CourseWithTotalStudent = CourseResponse & {
@@ -56,8 +59,44 @@ export const toResponseCourse = (course: CourseWithTotalStudent): CourseWithTota
     thumbnail: course.thumbnail,
     category: course.category,
     student: course.student,
+    description: course.description,
+    tagline: course.tagline,
     total_student: course.total_student,
     thumbnail_url: course.thumbnail_url
 })
+
+
+// course detail 
+export type CourseDetailResponse = {
+    _id: string;
+    name: string;
+    thumbnail: string;
+    category: {
+        _id: string
+        name: string
+    },
+    student:
+    {
+        name: string
+    }[],
+    description: string;
+    tagline: string
+    total_student: number;
+    thumbnail_url: string
+}
+
+
+export const toResponseCourseDetail = (course: CourseDetailResponse): CourseDetailResponse => ({
+    _id: course._id,
+    name: course.name,
+    thumbnail: course.thumbnail,
+    category: course.category,
+    student: course.student,
+    description: course.description,
+    tagline: course.tagline,
+    total_student: course.total_student,
+    thumbnail_url: course.thumbnail_url
+})
+
 
 

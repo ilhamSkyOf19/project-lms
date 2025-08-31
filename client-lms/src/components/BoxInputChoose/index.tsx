@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState, type FC } from 'react'
 import type { CategoryResponse } from '../../model/category-model';
-import type { FieldError, UseFormRegisterReturn, UseFormSetValue } from 'react-hook-form';
+import type { FieldError, UseFormRegisterReturn, } from 'react-hook-form';
 import ErrorMessage from '../ErrorMessage';
-import type { CourseRequest } from '../../model/course-model';
 
 
 type Props = {
@@ -16,7 +15,7 @@ type Props = {
     placeholder: string;
     register: UseFormRegisterReturn;
     error?: FieldError;
-    setValue: UseFormSetValue<CourseRequest>;
+    setValue: any;
 }
 const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOnChange, placeholder, register, error, setValue }) => {
     // state option
@@ -43,12 +42,6 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
             document.removeEventListener('mousedown', handleClickOutside);
         }
     }, [optionRef])
-
-
-    // cek value
-    useEffect(() => {
-        console.log(value)
-    }, [value])
 
 
     return (

@@ -23,10 +23,7 @@ const loaderAuth = async (role: 'manager' | 'student') => {
         return response.data;
     } catch (error) {
         console.log(error)
-        return {
-            success: false,
-            message: 'something went wrong'
-        }
+        return redirect('/manager/sign-in');
     }
 }
 

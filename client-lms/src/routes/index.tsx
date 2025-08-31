@@ -16,6 +16,8 @@ import AddStudent from "../Pages/managers/student/AddStudent";
 import Preview from "../Pages/Preview";
 import Student from "../Pages/Student";
 import loaderAuth from "../contexts/loadersAuth";
+import loaderCourseDetail from "../contexts/loaderCourseDetail";
+import UpdateCourse from "../Pages/managers/course/UpdateCourse";
 
 const route = createBrowserRouter([
     {
@@ -62,7 +64,17 @@ const route = createBrowserRouter([
             },
             {
                 path: "/manager/course/manage-course-materi/:id",
+                loader: async ({ params }) => {
+                    return loaderCourseDetail(params.id as string)
+                },
                 element: <ManageCourseMateri />,
+            },
+            {
+                path: "/manager/course/edit-course/:id",
+                loader: async ({ params }) => {
+                    return loaderCourseDetail(params.id as string)
+                },
+                element: <UpdateCourse />,
             },
             {
                 path: "/manager/course/manage-course-materi/:id/add-content",

@@ -11,6 +11,9 @@ const coursRoutes: Router = express.Router();
 // get 
 coursRoutes.get('/course', tokenMiddelware, CourseController.get);
 
+// get detail 
+coursRoutes.get('/course/:id', tokenMiddelware, CourseController.getDetail);
+
 
 // create 
 coursRoutes.post('/course', tokenMiddelware, upload.single('thumbnail'), CourseController.create);
