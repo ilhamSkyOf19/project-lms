@@ -5,13 +5,14 @@ import type { FieldError, UseFormRegisterReturn, } from 'react-hook-form';
 import ErrorMessage from '../ErrorMessage';
 
 
+
 type Props = {
     name: string;
     icon: string;
     label: string;
     value: string;
     handleOnChange: (option: CategoryResponse) => void
-    chooses: CategoryResponse[]
+    chooses: CategoryResponse[];
     placeholder: string;
     register: UseFormRegisterReturn;
     error?: FieldError;
@@ -78,7 +79,8 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
                         <div ref={optionRef} className='w-[90%] absolute top-[107%] flex flex-col justify-center items-center bg-white border'>
                             <div className='w-[100%] flex flex-col justify-start items-start'>
                                 {
-                                    chooses.map((item, i) => (
+
+                                    chooses?.map((item, i) => (
                                         <Option key={i} option={item.name} handleClick={() => {
                                             handleOnChange(item),
                                                 setValue('categoryId', item._id ?? "", { shouldValidate: true })
@@ -105,7 +107,7 @@ const BoxInputChoose: FC<Props> = ({ icon, name, label, value, chooses, handleOn
 
 type PropsOption = {
     option: string;
-    handleClick: (option: string) => void;
+    handleClick: (option: string | ['video', 'text']) => void;
 }
 // option 
 const Option: FC<PropsOption> = ({ option, handleClick }) => {

@@ -81,6 +81,9 @@ const route = createBrowserRouter([
             },
             {
                 path: "/manager/course/manage-course-materi/:id/add-content",
+                loader: async ({ params }) => {
+                    return loaderCourseDetail(params.id as string)
+                },
                 element: <AddContentCourse />,
             },
             {

@@ -43,6 +43,13 @@ export type CourseResponse = {
     {
         name: string
     }[],
+    details: {
+        _id: string
+        title: string
+        type: 'video' | 'text'
+        videoId?: string
+        text?: string
+    }[],
     description: string;
     tagline: string
 }
@@ -62,7 +69,8 @@ export const toResponseCourse = (course: CourseWithTotalStudent): CourseWithTota
     description: course.description,
     tagline: course.tagline,
     total_student: course.total_student,
-    thumbnail_url: course.thumbnail_url
+    thumbnail_url: course.thumbnail_url,
+    details: course.details
 })
 
 
@@ -78,6 +86,13 @@ export type CourseDetailResponse = {
     student:
     {
         name: string
+    }[],
+    details: {
+        _id: string
+        title: string
+        type: 'video' | 'text'
+        videoId?: string
+        text?: string
     }[],
     description: string;
     tagline: string
@@ -95,7 +110,8 @@ export const toResponseCourseDetail = (course: CourseDetailResponse): CourseDeta
     description: course.description,
     tagline: course.tagline,
     total_student: course.total_student,
-    thumbnail_url: course.thumbnail_url
+    thumbnail_url: course.thumbnail_url,
+    details: course.details
 })
 
 

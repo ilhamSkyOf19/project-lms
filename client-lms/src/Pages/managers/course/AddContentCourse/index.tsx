@@ -1,45 +1,76 @@
-import { useEffect, useState, type FC } from 'react'
+import { useEffect, useRef, useState, type FC } from 'react'
 import LinkRoute from '../../../../components/LinkRoute'
-import { useParams } from 'react-router'
-import course from '../../../../jsons/course.json'
-import type { DataCourse } from '../../../../types'
+import { useLoaderData, useNavigate, useParams } from 'react-router'
 import BoxInputData from '../../../../components/BoxInputData'
-import BoxInputChoose from '../../../../components/BoxInputChoose'
 import ButtonBorder from '../../../../components/ButtonBorder'
 import ButtonPurple from '../../../../components/ButtonPurple'
 
 import { Editor } from '@tinymce/tinymce-react';
+import type { CourseDetailResponse } from '../../../../model/course-model'
+import { useForm, type FieldError, type UseFormRegisterReturn, type UseFormSetValue } from 'react-hook-form'
+import clsx from 'clsx'
+import ErrorMessage from '../../../../components/ErrorMessage'
+import type { CourseDetailContentRequest } from '../../../../model/courseDetail-model'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { CourseDetailValidation } from '../../../../validation/courseDetail-validation'
+import { useMutation } from '@tanstack/react-query'
+import { CourseDetailService } from '../../../../service/courseDetail.service'
 
 
 const AddContentCourse: FC = () => {
-    const [thumb, setThumb] = useState<string>('');
-    const [contentType, setContentType] = useState<string>('');
+
+    // get use loader 
+    const { thumbnail_url } = useLoaderData() as CourseDetailResponse;
+
+    const [contentType, setContentType] = useState<'video' | 'text' | "">('');
 
     // get params
     const { id } = useParams() as { id: string };
 
+    // navigate 
+    const navigate = useNavigate();
 
 
-    // handle data course thumb
-    useEffect(() => {
-        if (id) {
-            const getData: DataCourse | undefined = (course as DataCourse[]).find((item) => item.id === id);
 
-            if (getData) {
-                setThumb(getData.img);
-            }
-        }
-    }, [id])
-
-    console.log(thumb)
 
 
     // handle content type 
-    const handleContentType = (option: string) => {
+    const handleContentType = (option: 'video' | 'text' | '') => {
         setContentType(option);
     }
 
-    // console.log(import.meta.env.VITE_API_TINYMCE_KEY)
+
+    // use form 
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<CourseDetailContentRequest>({
+        resolver: zodResolver(CourseDetailValidation.CREATE)
+
+    })
+
+    // handle mutation
+    const { isPending, mutateAsync } = useMutation({
+        mutationFn: (data: CourseDetailContentRequest) => CourseDetailService.create(data, id),
+        onSuccess: (res) => {
+            if (res.success) {
+                navigate(`/manager/course/manage-course-materi/${id}`);
+            } else {
+                console.warn("⚠️ Gagal:", res.message);
+            }
+        },
+        onError: (err) => {
+            console.error("❌ Error:", err);
+        }
+    })
+
+
+    // ON Submit 
+    const onSubmit = (data: CourseDetailContentRequest) => {
+        mutateAsync(data);
+    }
+
+
+
+
+
 
 
     return (
@@ -54,7 +85,7 @@ const AddContentCourse: FC = () => {
             <div className='w-full h-[6.5rem] flex flex-row justify-start items-center gap-6'>
                 {/* thumb */}
                 <div className='w-[9rem] h-full rounded-3xl overflow-hidden'>
-                    <img src={`/assets/images/thumbnails/${thumb}`} alt="thumb course" className='w-full h-full object-cover' loading='lazy' />
+                    <img src={`${thumbnail_url}`} alt="thumb course" className='w-full h-full object-cover' loading='lazy' />
                 </div>
                 {/* text */}
                 <div className='h-full flex flex-col justify-center items-start gap-1.5'>
@@ -69,17 +100,17 @@ const AddContentCourse: FC = () => {
             {/* content input */}
             <div className='bg-[#F8FAFB] w-full flex flex-col justify-start items-center p-8 rounded-3xl overflow-x-hidden'>
                 {/* input */}
-                <form className='w-full h-full flex flex-col justify-start items-start gap-8'>
+                <form onSubmit={handleSubmit(onSubmit)} className='w-full h-full flex flex-col justify-start items-start gap-8'>
                     {/* content title */}
-                    <BoxInputData icon='note-favorite-black.svg' label='Content Title' type='text' placeholder='Write better name for your course' name='contentTitle' />
+                    <BoxInputData icon='note-favorite-black.svg' label='Content Title' type='text' placeholder='Write better name for your course' name='title' register={register('title')} error={errors.title} />
 
                     {/* input content type */}
-                    <BoxInputChoose name='contentType' chooses={['video', 'text']} icon='crown-black.svg' label='select type' value={contentType} handleOnChange={handleContentType} placeholder='Choose content type' />
+                    <BoxInputChooseAddContent name='type' choose={['video', 'text']} icon='crown-black.svg' label='select type' value={contentType ?? ''} handleOnChange={handleContentType} placeholder='Choose content type' setValue={setValue} register={register('type')} error={errors.type} />
 
                     {
                         contentType === 'video' ? (
 
-                            <BoxInputData icon='bill-black.svg' label='Youtube Video ID' type='text' placeholder='Write tagline for better copy' name='youtubeVideoID' />
+                            <BoxInputData icon='bill-black.svg' label='Youtube Video ID' type='text' placeholder='Write tagline for better copy' name='videoId' register={register('videoId')} error={errors.videoId} />
                         ) : contentType === 'text' ? (
                             <div className='w-full flex flex-col justify-start items-start gap-4'>
                                 <label className='text-md text-black font-semibold capitalize'>
@@ -100,7 +131,7 @@ const AddContentCourse: FC = () => {
                                             { text: 'HTML/XML', value: 'markup' }
                                         ]
                                     }}
-                                    onEditorChange={(content) => console.log(content)}
+                                    onEditorChange={(content) => setValue('text', content)}
                                 />
                             </div>
 
@@ -112,9 +143,9 @@ const AddContentCourse: FC = () => {
                     {/* button */}
                     <div className='w-full flex flex-row justify-center items-center gap-4'>
                         {/* save as draft */}
-                        <ButtonBorder label='save as draft' width='full' type='submit' />
+                        <ButtonBorder label='save as draft' width='full' type='button' />
                         {/* add content */}
-                        <ButtonPurple label='add content now' width='full' type='submit' />
+                        <ButtonPurple label='add content now' width='full' type='submit' disabled={isPending} />
                     </div>
                 </form>
 
@@ -122,5 +153,120 @@ const AddContentCourse: FC = () => {
         </div>
     )
 }
+
+
+type Props = {
+    name: string;
+    icon: string;
+    label: string;
+    value: 'video' | 'text' | '';
+    placeholder: string;
+    register: UseFormRegisterReturn;
+    handleOnChange: (option: 'video' | 'text') => void
+    error?: FieldError;
+    setValue: UseFormSetValue<CourseDetailContentRequest>;
+    choose: ['video', 'text'];
+}
+const BoxInputChooseAddContent: FC<Props> = ({ icon, name, label, value, placeholder, register, error, setValue, choose, handleOnChange }) => {
+    // state option
+    const [optionActive, setOptionActive] = useState<boolean>(false);
+    // ref option & ref input & ref button arrow down
+    const inputRef = useRef<HTMLInputElement>(null);
+    const optionRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+
+
+    // handle outside click option
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+
+            if (optionRef.current && !optionRef.current.contains(target) && inputRef.current && !inputRef.current.contains(target) && buttonRef.current && !buttonRef.current.contains(target)) {
+                setOptionActive(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+    }, [optionRef])
+
+
+    return (
+        <div className='w-full flex flex-col justify-start items-start gap-1'>
+            {/* label */}
+            <label htmlFor={name} className='font-semibold text-black text-md capitalize'>
+                {label}
+            </label>
+            <div className={clsx(
+                'w-full px-5 flex flex-row justify-start items-start bg-transparent border border-[#CFDBEF] gap-3 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-purple rounded-full py-3.5 relative',
+            )}>
+                {/* icons */}
+                <label htmlFor={name} className='w-6 h-6 flex flex-col justify-center items-center'>
+                    <img src={`/assets/images/icons/${icon}`} loading='lazy' />
+                </label>
+
+                {/* input */}
+                <input
+                    {...register}
+                    ref={inputRef}
+                    type='text'
+                    name={name}
+                    id={name}
+                    placeholder={placeholder}
+                    value={value}
+                    readOnly
+                    className='appearance-none outline-none bg-transparent w-full font-semibold text-black placeholder:font-normal placeholder:text-[#6B6C7F] h-full relative cursor-pointer capitalize'
+                    onClick={() => setOptionActive(!optionActive)}
+                />
+
+                {/* option */}
+                {
+                    optionActive && (
+                        <div ref={optionRef} className='w-[90%] absolute top-[107%] flex flex-col justify-center items-center bg-white border'>
+                            <div className='w-[100%] flex flex-col justify-start items-start'>
+                                {
+                                    choose.map((item, i) => (
+                                        <Option key={i} option={item} handleClick={() => {
+                                            handleOnChange(item),
+                                                setValue('type', item ?? "", { shouldValidate: true })
+                                        }} />
+                                    ))
+
+                                }
+                            </div>
+                        </div>
+                    )
+                }
+
+                {/* arrow down */}
+                <button ref={buttonRef} type='button' className='w-6.5 h-full flex flex-col justify-center items-center' onClick={() => setOptionActive(!optionActive)}>
+                    <img src="/assets/images/icons/arrow-down.svg" alt="arrow" className="w-full" />
+                </button>
+            </div>
+            {/* error message */}
+            <div className='min-h-7'>
+                <ErrorMessage error={error?.message} />
+            </div>
+        </div>
+    )
+}
+
+type PropsOption = {
+    option: string;
+    handleClick: (option: string | 'video' | 'text') => void;
+}
+// option 
+const Option: FC<PropsOption> = ({ option, handleClick }) => {
+    return (
+        <button type='button' className='w-full py-1.5 px-4 hover:bg-primary-purple hover:text-white transition-all duration-100 text-left' onClick={() => handleClick(option)}>
+            {option}
+        </button>
+    )
+}
+
+
 
 export default AddContentCourse

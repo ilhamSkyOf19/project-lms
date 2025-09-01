@@ -8,6 +8,9 @@ import PaginationNumber from '../../../../components/PaginationNumber';
 import LinkRoute from '../../../../components/LinkRoute';
 import type { CourseDetailResponse } from '../../../../model/course-model';
 import ButtonLinkBorder from '../../../../components/ButtonLinkBorder';
+import CardCourseContent from '../../../../components/CardCourseContent';
+import ButtonDelete from '../../../../components/ButtonnDelete';
+import type { CourseDetailContentResponseType } from '../../../../model/courseDetail-model';
 
 const ManageCourseMateri: FC = () => {
 
@@ -77,21 +80,25 @@ const ManageCourseMateri: FC = () => {
                 <div className='w-full flex flex-col justify-start items-center gap-6'>
                     {/* card */}
                     {
-                        // data?.contentList.map((item, index) => (
-                        //     <div key={index} className='w-full flex flex-row justify-between items-center'>
-                        //         <div className='flex-2 flex flex-row justify-start items-center'>
-                        //             <CardCourseContent data={item} number={index + 1} />
-                        //         </div>
-                        //         {/* button */}
-                        //         <div className='flex-1 flex flex-row justify-end items-center gap-3'>
-                        //             {/* edit content */}
-                        //             <ButtonLinkBorder link='#' label='edit content' />
-                        //             {/* delete */}
-                        //             <ButtonDelete label='delete' />
-                        //         </div>
-                        //     </div>
+                        data && data.details && data.details.length > 0 ? (
+                            data.details.map((item, index) => (
+                                <div key={index} className='w-full flex flex-row justify-between items-center'>
+                                    <div className='flex-2 flex flex-row justify-start items-center'>
+                                        <CardCourseContent data={item as CourseDetailContentResponseType} number={index + 1} />
+                                    </div>
+                                    {/* button */}
+                                    <div className='flex-1 flex flex-row justify-end items-center gap-3'>
+                                        {/* edit content */}
+                                        <ButtonLinkBorder link='#' label='edit content' />
+                                        {/* delete */}
+                                        <ButtonDelete label='delete' />
+                                    </div>
+                                </div>
 
-                        // ))
+                            ))
+                        ) : (
+                            <h1 className='font-bold text-xl text-black'>No Content</h1>
+                        )
                     }
                 </div>
 

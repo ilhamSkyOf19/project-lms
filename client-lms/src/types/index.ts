@@ -59,3 +59,8 @@ export type DataContent = {
 export type ResponseService<T> =
     { success: true, data: T }
     | { success: false, message: string }
+
+
+export type ChooseAddContent = {
+    type: ['video', 'text'];
+}

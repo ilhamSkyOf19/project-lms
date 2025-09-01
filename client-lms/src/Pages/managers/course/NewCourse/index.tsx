@@ -9,7 +9,7 @@ import clsx from 'clsx'
 import type { CategoryResponse } from '../../../../model/category-model'
 import { CategoryService } from '../../../../service/category.service'
 import { useForm, type FieldError, type UseFormRegisterReturn, type UseFormResetField, type UseFormSetValue } from 'react-hook-form'
-import type { CourseRequest, UpdateCourseRequest } from '../../../../model/course-model'
+import type { CourseRequest } from '../../../../model/course-model'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CourseValidation } from '../../../../validation/course-validation'
 import ErrorMessage from '../../../../components/ErrorMessage'
@@ -69,23 +69,6 @@ const NewCourse: FC = () => {
     })
 
 
-
-
-
-    // handle submit
-    // const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-
-    //     const formData = new FormData(event.currentTarget);
-    //     const file = formData.get("thumbnail") as File;
-
-    //     if (file.name === '') {
-    //         setThumbnailEmpty(true);
-    //         return;
-    //     }
-
-    //     console.log(file);
-    // }
 
     const onSubmit = async (data: CourseRequest) => {
         if (!data) return;

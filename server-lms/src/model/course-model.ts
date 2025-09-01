@@ -87,6 +87,9 @@ export type CourseResponseDetail = {
     }[],
     description: string;
     tagline: string;
+    details: {
+        _id: string
+    }[];
     total_student: number;
     thumbnail_url: string
 }
@@ -101,6 +104,7 @@ export const toResponseCourseDetail = (course: CourseResponseDetail): CourseResp
     description: course.description,
     tagline: course.tagline,
     total_student: course.total_student,
+    details: course.details,
     thumbnail_url: course.thumbnail_url
 })
 
