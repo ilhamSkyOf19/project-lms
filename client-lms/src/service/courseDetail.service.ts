@@ -4,6 +4,34 @@ import type { CourseDetailContentRequest, CourseDetailContentResponseType } from
 import type { ResponseService } from "../types";
 
 export class CourseDetailService {
+    // get course content 
+    static async get(idCourse: string): Promise<ResponseService<CourseDetailContentResponseType>> {
+        try {
+            // response 
+            const response = await AXIOS.get(`/course-detail/${idCourse}`).then(res => res.data);
+
+            if (!response.success) {
+                return {
+                    success: false,
+                    message: response.message
+                }
+            }
+
+            return response
+        } catch (error) {
+            console.log(error);
+            // return error response
+            if (error instanceof AxiosError) {
+                return error.response?.data
+            }
+            return {
+                success: false,
+                message: 'something went wrong'
+            }
+        }
+    }
+
+
     // create 
     static async create(req: CourseDetailContentRequest, idCourse: string): Promise<ResponseService<CourseDetailContentResponseType>> {
         try {
@@ -65,4 +93,31 @@ export class CourseDetailService {
             }
         }
     }
+
+    // update 
+    static async update(data: CourseDetailContentRequest, idCourse: string, idCourseContent: string): Promise<{ success: boolean, message: string }> {
+        try {
+            // response 
+            const response = await AXIOS.put(`/course/${idCourse}/course-detail/${idCourseContent}`, data).then(res => res.data);
+
+            if (!response.success) {
+                return {
+                    success: false,
+                    message: response.message
+                }
+            }
+
+            return {
+                success: true,
+                message: response.message
+            }
+        } catch (error) {
+            console.log(error);
+            return {
+                success: false,
+                message: 'something went wrong'
+            }
+        }
+    }
+
 }

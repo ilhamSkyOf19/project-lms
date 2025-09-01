@@ -1,13 +1,22 @@
-import { CourseResponse } from "../model/course-model";
-import { CourseDetailRequest, CourseDetailResponseType, toCourseDetailResponse } from "../model/courseDetail-model";
+import { CourseResponse, } from "../model/course-model";
+import { CourseDetailRequest, CourseDetailResponseType } from "../model/courseDetail-model";
 import { CourseDetailModel, CourseModel } from "../schema/courseSchema";
 
 export class CourseDetailService {
     // get 
     static async getAll(): Promise<CourseDetailResponseType[]> {
         const response = await CourseDetailModel.find().lean<CourseDetailResponseType[]>();
-
         return response
+    }
+
+    // get detail
+    static async getDetail(id: string): Promise<CourseDetailResponseType> {
+        const response = await CourseDetailModel.findById(id).lean<CourseDetailResponseType>();
+
+        return response as CourseDetailResponseType
+
+
+
     }
 
     // create 

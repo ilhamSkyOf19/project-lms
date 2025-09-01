@@ -10,17 +10,28 @@ import type { CourseDetailResponse } from '../../../../model/course-model'
 import { useForm, type FieldError, type UseFormRegisterReturn, type UseFormSetValue } from 'react-hook-form'
 import clsx from 'clsx'
 import ErrorMessage from '../../../../components/ErrorMessage'
-import type { CourseDetailContentRequest } from '../../../../model/courseDetail-model'
+import type { CourseDetailContentRequest, CourseDetailContentResponseType } from '../../../../model/courseDetail-model'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CourseDetailValidation } from '../../../../validation/courseDetail-validation'
 import { useMutation } from '@tanstack/react-query'
 import { CourseDetailService } from '../../../../service/courseDetail.service'
+import type { ResponseService } from '../../../../types'
 
 
 const AddContentCourse: FC = () => {
 
     // get use loader 
-    const { thumbnail_url } = useLoaderData() as CourseDetailResponse;
+    const { Course, CourseContent } = useLoaderData() as {
+        Course: CourseDetailResponse,
+        CourseContent: CourseDetailContentResponseType
+    };
+
+
+
+
+
+
+
 
     const [contentType, setContentType] = useState<'video' | 'text' | "">('');
 
@@ -39,16 +50,34 @@ const AddContentCourse: FC = () => {
         setContentType(option);
     }
 
+    useEffect(() => {
+
+        if (CourseContent) {
+            setContentType(CourseContent.type);
+        }
+
+    }, [CourseContent])
+
 
     // use form 
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<CourseDetailContentRequest>({
+        defaultValues: {
+            text: CourseContent ? CourseContent.text : '',
+            title: CourseContent ? CourseContent.title : '',
+            type: CourseContent ? CourseContent.type : 'text',
+            videoId: CourseContent ? CourseContent.videoId : '',
+        },
         resolver: zodResolver(CourseDetailValidation.CREATE)
 
     })
 
     // handle mutation
     const { isPending, mutateAsync } = useMutation({
-        mutationFn: (data: CourseDetailContentRequest) => CourseDetailService.create(data, id),
+        mutationFn: (data: CourseDetailContentRequest) => (CourseContent
+            ? CourseDetailService.update(data, Course._id, CourseContent._id)
+            : CourseDetailService.create(data, Course._id)
+        ) as Promise<ResponseService<CourseDetailContentResponseType>>,
+
         onSuccess: (res) => {
             if (res.success) {
                 navigate(`/manager/course/manage-course-materi/${id}`);
@@ -62,7 +91,7 @@ const AddContentCourse: FC = () => {
     })
 
 
-    // ON Submit 
+    // On Submit 
     const onSubmit = (data: CourseDetailContentRequest) => {
         mutateAsync(data);
     }
@@ -85,7 +114,7 @@ const AddContentCourse: FC = () => {
             <div className='w-full h-[6.5rem] flex flex-row justify-start items-center gap-6'>
                 {/* thumb */}
                 <div className='w-[9rem] h-full rounded-3xl overflow-hidden'>
-                    <img src={`${thumbnail_url}`} alt="thumb course" className='w-full h-full object-cover' loading='lazy' />
+                    <img src={`${Course.thumbnail_url}`} alt="thumb course" className='w-full h-full object-cover' loading='lazy' />
                 </div>
                 {/* text */}
                 <div className='h-full flex flex-col justify-center items-start gap-1.5'>

@@ -25,6 +25,37 @@ export class CourseDetailController {
         }
     }
 
+
+    // get detail 
+    static async getDetail(req: Request<{ id: string }>, res: Response<ResponseService<CourseDetailController>>) {
+        try {
+            // get params 
+            const { id } = req.params;
+
+            // response 
+            const response = await CourseDetailService.getDetail(id);
+
+            if (!response) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Data not found"
+                })
+            }
+
+            // return response 
+            res.status(200).json({
+                success: true,
+                data: response
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            })
+        }
+    }
+
     // create 
     static async create(req: Request<{ id: string }, {}, CourseDetailRequest>, res: Response<ResponseService<CourseResponseDetail | string>>) {
         try {

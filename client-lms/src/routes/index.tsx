@@ -19,6 +19,7 @@ import loaderAuth from "../contexts/loadersAuth";
 import loaderCourseDetail from "../contexts/loaderCourseDetail";
 import UpdateCourse from "../Pages/managers/course/UpdateCourse";
 import loaderCourseAll from "../contexts/loaderCourseAll";
+import { loaderCourseContent } from "../contexts/loaderCourseContent";
 
 const route = createBrowserRouter([
     {
@@ -83,6 +84,18 @@ const route = createBrowserRouter([
                 path: "/manager/course/manage-course-materi/:id/add-content",
                 loader: async ({ params }) => {
                     return loaderCourseDetail(params.id as string)
+                },
+                element: <AddContentCourse />,
+            },
+            {
+                path: "/manager/course/manage-course-materi/:id/update-content/:idContent",
+                loader: async ({ params }) => {
+                    const [courseDetail, courseContent] = await Promise.all([
+                        loaderCourseDetail(params.id as string),
+                        loaderCourseContent(params.idContent as string)
+                    ]);
+
+                    return { Course: courseDetail, CourseContent: courseContent };
                 },
                 element: <AddContentCourse />,
             },

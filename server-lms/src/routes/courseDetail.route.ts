@@ -11,6 +11,10 @@ const courseDetailRoutes: Router = express.Router();
 courseDetailRoutes.get('/course-detail', tokenMiddelware, CourseDetailController.getAll);
 
 
+// get detail 
+courseDetailRoutes.get('/course-detail/:id', tokenMiddelware, CourseDetailController.getDetail);
+
+
 // create
 courseDetailRoutes.post('/course/:id/course-detail', tokenMiddelware, validationRequest(CourseDetailValidation.CREATE), CourseDetailController.create);
 

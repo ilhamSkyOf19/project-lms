@@ -106,7 +106,7 @@ const ManageCourseMateri: FC = () => {
                                     {/* button */}
                                     <div className='flex-1 flex flex-row justify-end items-center gap-3'>
                                         {/* edit content */}
-                                        <ButtonLinkBorder link='#' label='edit content' />
+                                        <ButtonLinkBorder link={`/manager/course/manage-course-materi/${data._id}/update-content/${item._id}`} label='edit content' />
                                         {/* delete */}
                                         <ButtonDelete label='delete' handleButton={() => handleDeleteCourseContent(item._id as string)} />
                                     </div>
