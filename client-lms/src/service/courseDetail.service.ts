@@ -33,4 +33,36 @@ export class CourseDetailService {
             }
         }
     }
+
+    // delete
+    static async delete(idCourse: string, idCourseContent: string): Promise<{ success: boolean, message: string }> {
+        try {
+            // response 
+            const response = await AXIOS.delete(`/course/${idCourse}/course-detail/${idCourseContent}`).then(res => res.data);
+
+            if (!response.success) {
+                return {
+                    success: false,
+                    message: response.message
+                }
+            }
+
+            return {
+                success: true,
+                message: response.message
+            }
+
+
+        } catch (error) {
+            console.log(error);
+            // return error response
+            if (error instanceof AxiosError) {
+                return error.response?.data
+            }
+            return {
+                success: false,
+                message: 'something went wrong'
+            }
+        }
+    }
 }

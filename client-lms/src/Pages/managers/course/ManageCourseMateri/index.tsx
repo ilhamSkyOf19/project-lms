@@ -1,5 +1,5 @@
 import { useState, type FC } from 'react'
-import { useLoaderData } from 'react-router'
+import { useLoaderData, useRevalidator } from 'react-router'
 import HeaderContentDashboard from '../../../../components/HeaderContentDahsboard';
 import ButtonLinkPurple from '../../../../components/ButtonLinkPurple';
 
@@ -11,11 +11,15 @@ import ButtonLinkBorder from '../../../../components/ButtonLinkBorder';
 import CardCourseContent from '../../../../components/CardCourseContent';
 import ButtonDelete from '../../../../components/ButtonnDelete';
 import type { CourseDetailContentResponseType } from '../../../../model/courseDetail-model';
+import { CourseDetailService } from '../../../../service/courseDetail.service';
 
 const ManageCourseMateri: FC = () => {
 
     //  data  course
     const data = useLoaderData() as CourseDetailResponse;
+
+    // reavalidate 
+    const { revalidate } = useRevalidator();
 
 
 
@@ -30,6 +34,19 @@ const ManageCourseMateri: FC = () => {
     // handle pagination
     const handlePagination = (number: number) => {
         setPaginationActive(number);
+    }
+
+
+    // handle delete course content 
+    const handleDeleteCourseContent = async (id: string) => {
+        const fetch = await CourseDetailService.delete(data._id, id);
+
+        if (fetch.success) {
+            console.log(fetch.message);
+            revalidate();
+        } else {
+            console.log(fetch.message);
+        }
     }
 
     return (
@@ -91,7 +108,7 @@ const ManageCourseMateri: FC = () => {
                                         {/* edit content */}
                                         <ButtonLinkBorder link='#' label='edit content' />
                                         {/* delete */}
-                                        <ButtonDelete label='delete' />
+                                        <ButtonDelete label='delete' handleButton={() => handleDeleteCourseContent(item._id as string)} />
                                     </div>
                                 </div>
 
