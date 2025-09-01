@@ -86,11 +86,9 @@ export class CourseSchemas {
         },
         videoId: {
             type: String,
-            required: true
         },
         text: {
             type: String,
-            required: true
         },
         course: {
             type: mongoose.Schema.Types.ObjectId,

@@ -15,6 +15,7 @@ import path from "path";
 import multer from "multer";
 import { errorMulter } from "./middlewares/errorMulter";
 import categoryRoutes from "./routes/category.routes";
+import courseDetailRoutes from "./routes/courseDetail.route";
 
 
 type AuthRequest = Request & {
@@ -61,6 +62,7 @@ app.use("/api", authRoutes);
 app.use("/api", paymentRoutes);
 app.use("/api", coursRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api", courseDetailRoutes);
 
 
 

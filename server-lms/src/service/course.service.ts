@@ -18,6 +18,10 @@ export class CourseService {
                 path: 'student',
                 select: 'name -_id'
             })
+            .populate({
+                path: 'details',
+                select: '_id title type videoId text'
+            })
             .lean<CourseResponse[]>();
 
 

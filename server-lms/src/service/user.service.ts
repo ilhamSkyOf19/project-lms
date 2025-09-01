@@ -6,13 +6,6 @@ type MidtransResponse = {
     redirect_url: string
 }
 
-
-type UserType = {
-    name: string;
-    photo: string;
-    email: string;
-    role: 'manager' | 'student';
-}
 export class UserService {
     // create 
     static async create(req: UserRequestType): Promise<MidtransResponse> {
