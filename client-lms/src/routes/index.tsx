@@ -83,7 +83,11 @@ const route = createBrowserRouter([
             {
                 path: "/manager/course/manage-course-materi/:id/add-content",
                 loader: async ({ params }) => {
-                    return loaderCourseDetail(params.id as string)
+                    const [courseDetail] = await Promise.all([
+                        loaderCourseDetail(params.id as string),
+                    ]);
+
+                    return { Course: courseDetail };
                 },
                 element: <AddContentCourse />,
             },

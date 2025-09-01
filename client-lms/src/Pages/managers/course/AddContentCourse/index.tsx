@@ -97,6 +97,8 @@ const AddContentCourse: FC = () => {
     }
 
 
+    console.log(Course)
+
 
 
 
@@ -114,7 +116,7 @@ const AddContentCourse: FC = () => {
             <div className='w-full h-[6.5rem] flex flex-row justify-start items-center gap-6'>
                 {/* thumb */}
                 <div className='w-[9rem] h-full rounded-3xl overflow-hidden'>
-                    <img src={`${Course.thumbnail_url}`} alt="thumb course" className='w-full h-full object-cover' loading='lazy' />
+                    <img src={`${Course?.thumbnail_url}`} alt="thumb course" className='w-full h-full object-cover' loading='lazy' />
                 </div>
                 {/* text */}
                 <div className='h-full flex flex-col justify-center items-start gap-1.5'>
