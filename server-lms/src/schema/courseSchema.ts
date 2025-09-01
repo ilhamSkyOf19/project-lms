@@ -135,6 +135,13 @@ CourseSchemas.CourseSchema.post("findOneAndDelete", async (doc: ICourse) => {
 // middleware update delete 
 CourseSchemas.CourseDetailSchema.post("findOneAndDelete", async (doc: ICourseDetail) => {
 
+    if (doc) {
+        // delete course detail in course 
+        await CourseModel.findByIdAndUpdate(doc.course, {
+            $pull: { details: doc.id }
+        })
+    }
+
 })
 
 
