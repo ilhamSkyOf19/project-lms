@@ -14,6 +14,16 @@ export interface ICourse extends Document {
 }
 
 
+// type for course detail 
+export interface ICourseDetail extends Document {
+    title: string
+    type: 'video' | 'text'
+    videoId: string
+    text: string
+    course: Types.ObjectId
+}
+
+
 export class CourseSchemas {
     // Category Schema
     static CategorySchema = new mongoose.Schema({
@@ -74,7 +84,7 @@ export class CourseSchemas {
 
 
     // course detail 
-    static CourseDetailSchema = new mongoose.Schema({
+    static CourseDetailSchema = new mongoose.Schema<ICourseDetail>({
         title: {
             type: String,
             required: true
@@ -107,8 +117,6 @@ CourseSchemas.CourseSchema.post("findOneAndDelete", async (doc: ICourse) => {
         await CategoryModel.findByIdAndUpdate(doc.category, {
             $pull: { courses: doc.id }
         });
-        console.log("doc._id", doc._id);
-        console.log("doc.category", doc.category, typeof doc.category);
 
 
         // delete detail model 
@@ -121,6 +129,12 @@ CourseSchemas.CourseSchema.post("findOneAndDelete", async (doc: ICourse) => {
             })
         }
     }
+})
+
+
+// middleware update delete 
+CourseSchemas.CourseDetailSchema.post("findOneAndDelete", async (doc: ICourseDetail) => {
+
 })
 
 

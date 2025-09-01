@@ -10,8 +10,6 @@ export type CourseDetailRequest = {
 
 
 
-
-
 // export response 
 export type CourseDetailResponseType = {
     _id: string;

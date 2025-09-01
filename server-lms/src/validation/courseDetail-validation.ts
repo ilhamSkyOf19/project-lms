@@ -11,6 +11,6 @@ export class CourseDetailValidation {
         text: z.string().optional().default(""),
         course: z.object({
             _id: z.string()
-        })
+        }).optional()
     }).strict() satisfies ZodType<CourseDetailRequest>
 }

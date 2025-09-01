@@ -38,6 +38,42 @@ export class CourseDetailController {
             // response 
             const response = await CourseDetailService.create(body, idCourse);
 
+            // cek response
+            if (!response.success) return res.status(400).json({
+                success: false,
+                message: response.message
+            });
+
+            // return response
+            return res.status(200).json({
+                success: true,
+                data: response.message
+            })
+
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            })
+        }
+    }
+
+
+    // update
+    static async update(req: Request<{ idCourse: string, idCourseDetail: string }, {}, CourseDetailRequest>, res: Response<ResponseService<CourseResponseDetail | string>>) {
+        try {
+            // get params 
+            const { idCourse, idCourseDetail } = req.params;
+
+            // req body 
+            const body = req.body;
+
+            // response 
+            const response = await CourseDetailService.update(body, idCourse, idCourseDetail);
+
+            // cek response
             if (!response.success) return res.status(400).json({
                 success: false,
                 message: response.message
@@ -50,8 +86,33 @@ export class CourseDetailController {
             })
 
 
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            })
+        }
+    }
 
+    // delete 
+    static async delete(req: Request<{ idCourseDetail: string, idCourse: string }>, res: Response<{ success: boolean, message: string }>) {
+        try {
+            // get params 
+            const { idCourseDetail, idCourse } = req.params;
 
+            // response
+            const response = await CourseDetailService.async(idCourseDetail, idCourse);
+
+            if (!response.success) return res.status(400).json({
+                success: false,
+                message: response.message
+            });
+            // return response 
+            return res.status(200).json({
+                success: true,
+                message: "Success"
+            })
         } catch (error) {
             console.log(error);
             res.status(500).json({
