@@ -42,6 +42,22 @@ export class CourseService {
         }
     }
 
+    static async getDetailSidebar(id: string): Promise<ResponseService<CourseDetailResponse>> {
+        try {
+            const res: ResponseService<CourseDetailResponse> = await AXIOS.get(`/course/${id}`).then(res => res.data);
+            return res; // ⬅️ cukup ini
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                return error.response?.data as ResponseService<CourseDetailResponse>;
+            }
+
+            return {
+                success: false,
+                message: 'something went wrong',
+            } as ResponseService<CourseDetailResponse>;
+        }
+    }
+
     // create 
     static async create(data: FormData): Promise<ResponseService<{ message: string }>> {
         try {

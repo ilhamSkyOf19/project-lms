@@ -105,6 +105,9 @@ const route = createBrowserRouter([
             },
             {
                 path: "/manager/course/manage-course-materi/:id/preview/:idContent",
+                loader: async ({ params }) => {
+                    return loaderCourseContent(params.idContent as string)
+                },
                 element: <Preview />,
             },
             {

@@ -15,7 +15,12 @@ const LayoutDashboard: FC<Props> = ({ role }) => {
     const user = useLoaderData() as UserModel;
 
     // use match 
-    const preview = useMatch('/manager/course/manage-course-materi/:id/preview/:idContent') || useMatch('/student/course/:id/preview/:idContent');
+    const previewMatch = useMatch('/manager/course/manage-course-materi/:id/preview/:idContent');
+    const studentPreviewMatch = useMatch('/student/course/:id/preview/:idContent');
+
+    const preview = previewMatch || studentPreviewMatch; // ini aman
+
+
 
 
     return (

@@ -21,6 +21,8 @@ const ManageCourseMateri: FC = () => {
     // reavalidate 
     const { revalidate } = useRevalidator();
 
+    console.log(data);
+
 
 
 
@@ -50,81 +52,90 @@ const ManageCourseMateri: FC = () => {
     }
 
     return (
-        <div className='w-full min-h-[100vh] flex flex-col justify-start items-start gap-8'>
-            {/* link route */}
-            <LinkRoute link={[
-                { link: '/manager', label: 'dashboard' },
-                { link: '/manager/course', label: 'manage course' },
-                { link: `/manager/course/manage-course-materi/${data._id}`, label: 'detail' }]} />
+        <>
+            {data && data !== null ? (
+                <div className='w-full min-h-[100vh] flex flex-col justify-start items-start gap-8'>
+                    {/* link route */}
+                    <LinkRoute link={[
+                        { link: '/manager', label: 'dashboard' },
+                        { link: '/manager/course', label: 'manage course' },
+                        { link: `/manager/course/manage-course-materi/${data?._id ?? ""}`, label: 'detail' }]} />
 
-            {/* header content */}
-            <HeaderContentDashboard header={data?.name as string} desc=''>
-                {/* edit course */}
-                <ButtonLinkBorder link={`/manager/course/edit-course/${data._id}`} label='edit course' />
-                {/* preview */}
-                <ButtonLinkPurple link={`/manager/course/manage-course-materi/${data._id}/preview`} label='preview' />
-            </HeaderContentDashboard>
+                    {/* header content */}
+                    <HeaderContentDashboard header={data?.name as string} desc=''>
+                        {/* edit course */}
+                        <ButtonLinkBorder link={`/manager/course/edit-course/${data?._id ?? ""}`} label='edit course' />
+                        {/* preview */}
+                        <ButtonLinkPurple
+                            link={`/manager/course/manage-course-materi/${data?._id ?? ""}/preview/${data.details?.[0]?._id ?? ""}`}
+                            label="preview"
+                        />
+                    </HeaderContentDashboard>
 
-            {/* content information */}
-            <div className='w-full h-[15rem] flex flex-row justify-between items-center gap-12'>
-                {/* thumb */}
-                <div className='w-[57%] h-full rounded-2xl overflow-hidden'>
-                    <img
-                        src={`${data.thumbnail_url}`}
-                        alt='course' className='w-full h-full object-cover' loading='lazy' />
+                    {/* content information */}
+                    <div className='w-full h-[15rem] flex flex-row justify-between items-center gap-12'>
+                        {/* thumb */}
+                        <div className='w-[57%] h-full rounded-2xl overflow-hidden'>
+                            <img
+                                src={`${data.thumbnail_url}`}
+                                alt='course' className='w-full h-full object-cover' loading='lazy' />
+                        </div>
+                        <div className='w-[43%] h-full grid grid-cols-2 grid-rows-2 gap-4'>
+                            {/* card info */}
+                            <CardInfo icon='profile-2user-purple' text={`${(data.total_student ?? 0).toLocaleString('en-US')} Students`} />
+                            <CardInfo icon='crown-purple' text={data.category.name} />
+                            <CardInfo icon='note-favorite-purple' text={`${(0).toLocaleString('en-US')} Contents`} />
+                            <CardInfo icon='cup-purple' text={(true) === true ? 'Certificate' : 'No Certificate'} />
+                        </div>
+                    </div>
+
+
+                    {/* course content */}
+                    <div className='bg-[#F8FAFB] w-full flex flex-col justify-start items-center p-8 rounded-3xl overflow-x-hidden gap-12'>
+                        {/* title & button */}
+                        <div className='w-full flex flex-row justify-between items-center'>
+                            {/* title */}
+                            <h1 className='font-bold capitalize text-2xl text-black'>{data.tagline}</h1>
+                            {/* button */}
+                            <ButtonLinkPurple link={`/manager/course/manage-course-materi/${data?._id ?? ""}/add-content`} label='add content' />
+                        </div>
+
+                        {/* card course */}
+                        <div className='w-full flex flex-col justify-start items-center gap-6'>
+                            {/* card */}
+                            {
+                                data && data.details && data.details.length > 0 ? (
+                                    data.details.map((item, index) => (
+                                        <div key={index} className='w-full flex flex-row justify-between items-center'>
+                                            <div className='flex-2 flex flex-row justify-start items-center'>
+                                                <CardCourseContent data={item as CourseDetailContentResponseType} number={index + 1} />
+                                            </div>
+                                            {/* button */}
+                                            <div className='flex-1 flex flex-row justify-end items-center gap-3'>
+                                                {/* edit content */}
+                                                <ButtonLinkBorder link={`/manager/course/manage-course-materi/${data?._id ?? ""}/update-content/${item?._id ?? ""}`} label='edit content' />
+                                                {/* delete */}
+                                                <ButtonDelete label='delete' handleButton={() => handleDeleteCourseContent(item?._id ?? "")} />
+                                            </div>
+                                        </div>
+
+                                    ))
+                                ) : (
+                                    <h1 className='font-bold text-xl text-black'>No Content</h1>
+                                )
+                            }
+                        </div>
+
+                        {/* pagination */}
+                        <PaginationNumber paginationActive={paginationActive} handlePagination={handlePagination} pagination={5} />
+
+                    </div>
+
                 </div>
-                <div className='w-[43%] h-full grid grid-cols-2 grid-rows-2 gap-4'>
-                    {/* card info */}
-                    <CardInfo icon='profile-2user-purple' text={`${(data.total_student ?? 0).toLocaleString('en-US')} Students`} />
-                    <CardInfo icon='crown-purple' text={data.category.name} />
-                    <CardInfo icon='note-favorite-purple' text={`${(0).toLocaleString('en-US')} Contents`} />
-                    <CardInfo icon='cup-purple' text={(true) === true ? 'Certificate' : 'No Certificate'} />
-                </div>
-            </div>
-
-
-            {/* course content */}
-            <div className='bg-[#F8FAFB] w-full flex flex-col justify-start items-center p-8 rounded-3xl overflow-x-hidden gap-12'>
-                {/* title & button */}
-                <div className='w-full flex flex-row justify-between items-center'>
-                    {/* title */}
-                    <h1 className='font-bold capitalize text-2xl text-black'>{data.tagline}</h1>
-                    {/* button */}
-                    <ButtonLinkPurple link={`/manager/course/manage-course-materi/${data._id}/add-content`} label='add content' />
-                </div>
-
-                {/* card course */}
-                <div className='w-full flex flex-col justify-start items-center gap-6'>
-                    {/* card */}
-                    {
-                        data && data.details && data.details.length > 0 ? (
-                            data.details.map((item, index) => (
-                                <div key={index} className='w-full flex flex-row justify-between items-center'>
-                                    <div className='flex-2 flex flex-row justify-start items-center'>
-                                        <CardCourseContent data={item as CourseDetailContentResponseType} number={index + 1} />
-                                    </div>
-                                    {/* button */}
-                                    <div className='flex-1 flex flex-row justify-end items-center gap-3'>
-                                        {/* edit content */}
-                                        <ButtonLinkBorder link={`/manager/course/manage-course-materi/${data._id}/update-content/${item._id}`} label='edit content' />
-                                        {/* delete */}
-                                        <ButtonDelete label='delete' handleButton={() => handleDeleteCourseContent(item._id as string)} />
-                                    </div>
-                                </div>
-
-                            ))
-                        ) : (
-                            <h1 className='font-bold text-xl text-black'>No Content</h1>
-                        )
-                    }
-                </div>
-
-                {/* pagination */}
-                <PaginationNumber paginationActive={paginationActive} handlePagination={handlePagination} pagination={5} />
-
-            </div>
-
-        </div>
+            ) : (
+                <p>data not found</p>
+            )}
+        </>
     )
 }
 

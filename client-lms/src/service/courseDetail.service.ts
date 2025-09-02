@@ -95,24 +95,21 @@ export class CourseDetailService {
     }
 
     // update 
-    static async update(data: CourseDetailContentRequest, idCourse: string, idCourseContent: string): Promise<{ success: boolean, message: string }> {
+    static async update(data: CourseDetailContentRequest, idCourse: string, idCourseContent: string): Promise<ResponseService<CourseDetailContentResponseType>> {
         try {
             // response 
             const response = await AXIOS.put(`/course/${idCourse}/course-detail/${idCourseContent}`, data).then(res => res.data);
 
-            if (!response.success) {
-                return {
-                    success: false,
-                    message: response.message
-                }
-            }
-
             return {
-                success: true,
-                message: response.message
-            }
+                success: response.success,
+                message: response.message,
+                data: response.data ?? null, // pastikan backend kirim data terbaru
+            };
         } catch (error) {
             console.log(error);
+            if (error instanceof AxiosError) {
+                return error.response?.data
+            }
             return {
                 success: false,
                 message: 'something went wrong'

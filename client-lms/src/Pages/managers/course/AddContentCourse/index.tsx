@@ -15,7 +15,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CourseDetailValidation } from '../../../../validation/courseDetail-validation'
 import { useMutation } from '@tanstack/react-query'
 import { CourseDetailService } from '../../../../service/courseDetail.service'
-import type { ResponseService } from '../../../../types'
 
 
 const AddContentCourse: FC = () => {
@@ -64,7 +63,7 @@ const AddContentCourse: FC = () => {
         defaultValues: {
             text: CourseContent ? CourseContent.text : '',
             title: CourseContent ? CourseContent.title : '',
-            type: CourseContent ? CourseContent.type : 'text',
+            type: CourseContent ? CourseContent.type : '',
             videoId: CourseContent ? CourseContent.videoId : '',
         },
         resolver: zodResolver(CourseDetailValidation.CREATE)
@@ -76,11 +75,17 @@ const AddContentCourse: FC = () => {
         mutationFn: (data: CourseDetailContentRequest) => (CourseContent
             ? CourseDetailService.update(data, Course._id, CourseContent._id)
             : CourseDetailService.create(data, Course._id)
-        ) as Promise<ResponseService<CourseDetailContentResponseType>>,
+        ),
 
         onSuccess: (res) => {
             if (res.success) {
                 navigate(`/manager/course/manage-course-materi/${id}`);
+
+                // reset form
+                setValue('text', '');
+                setValue('title', '');
+                setValue('type', '');
+                setValue('videoId', '');
             } else {
                 console.warn("⚠️ Gagal:", res.message);
             }
@@ -94,6 +99,7 @@ const AddContentCourse: FC = () => {
     // On Submit 
     const onSubmit = (data: CourseDetailContentRequest) => {
         mutateAsync(data);
+
     }
 
 

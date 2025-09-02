@@ -1,17 +1,17 @@
 import { type FC } from 'react'
-import type { DataContent } from '../../types'
 import ButtonPurple from '../ButtonPurple';
+import type { CourseDetailContentResponseType } from '../../model/courseDetail-model';
 
 
 type Props = {
-    data: DataContent;
+    data?: CourseDetailContentResponseType;
 }
 const PreviewContentVideo: FC<Props> = ({ data }) => {
     return (
         <div className='w-full flex flex-col justify-start items-start gap-12'>
             {/* content video */}
             <iframe
-                src={data?.contentVideo}
+                src={`https://www.youtube.com/embed/${data?.videoId}`}
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen
                 loading='lazy'
@@ -20,7 +20,7 @@ const PreviewContentVideo: FC<Props> = ({ data }) => {
             {/* title & button */}
             <div className='w-full flex flex-row justify-between items-start'>
                 <h1 className='flex-2 font-bold text-black text-3xl'>
-                    {data?.name}
+                    {data?.title}
                 </h1>
                 {/* button complated */}
                 <ButtonPurple label='Mark as Complated' />

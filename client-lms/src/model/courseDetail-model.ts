@@ -1,7 +1,7 @@
 // create request 
 export type CourseDetailContentRequest = {
     title: string;
-    type: 'video' | 'text';
+    type: 'video' | 'text' | '';
     videoId?: string;
     text?: string;
 }
